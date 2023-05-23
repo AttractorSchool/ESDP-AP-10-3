@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}Index{% endblock %}
+{% block content_heading %}
+<h3>Тендеры</h3>
+{% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="row g-3">
+    {% csrf_token %}
+    <div class="col-auto">
+        <input class="form-control" type="file" name="excel_file">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-dark mb-3">Загрузить</button>
+    </div>
+</form>
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == "success" %}
+<p style="color: green">{{ message }}</p>
+{% else %}
+<p style="color: red">{{ message }}</p>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block table %}
+{% if tenders %}
+<table class="table table-bordered mt-3" id="tenderTable">
+    <thead class="table-primary">
+    <tr>
+        <th scope="col">№ лота</th>
+        <th scope="col">Учреждение</th>
+        <th scope="col">Наименование</th>
+        <th scope="col">Доп. инфо Т.С.</th>
+        <th scope="col">Цена за единицу</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Единица измерения</th>
+        <th scope="col">Плановая сумма</th>
+        <th scope="col">Срок поставки</th>
+        <th scope="col">Наименование предлагаемого товара</th>
+        <th scope="col">Поставщик</th>
+        <th scope="col">% скидка от поставщика</th>
+        <th scope="col">НДС</th>
+        <th scope="col">Примечание</th>
+        <th scope="col">Менеджер</th>
+        <th scope="col">Цена закупа</th>
+        <th scope="col">Общая информация</th>
+        <th scope="col">Дата</th>
+        <th scope="col">Крайний срок</th>
+        <th scope="col">Вид закупа</th>
+        <th scope="col">№/ссылка на бумажное объявление</th>
+        <th scope="col">Ссылка на эл.лот (формируется автоматически)</th>
+        <th scope="col">Коэфф. прибыли</th>
+        <th scope="col">Коэфф. доставки</th>
+        <th scope="col">Цена закупа за ед.</th>
+        <th scope="col">Цена подачи за ед.</th>
+        <th scope="col">Цена бюджета за ед.</th>
+        <th scope="col">Общая прибыль с проекта</th>
+        <th scope="col">Общая сумма закупа</th>
+        <th scope="col">Общая сумма договора</th>
+        <th scope="col">Выигрыщная цена</th>
+        <th scope="col">Текст для КП</th>
+        <th scope="col">Статус объявления</th>
+    </tr>
+    </thead>
+    {% for tender in tenders %}
+    <tbody>
+    <tr>
+        <td>{{ tender.lot }}</td>
+        <td>{{ tender.company }}</td>
+        <td>{{ tender.name }}</td>
+        <td>{{ tender.additional_info }}</td>
+        <td>{{ tender.price_per_unit }}</td>
+        <td>{{ tender.quantity }}</td>
+        <td>{{ tender.measure_unit }}</td>
+        <td>{{ tender.planned_amount }}</td>
+        <td>{{ tender.delivery_deadline }}</td>
+        <td>{{ tender.proposed_product_name }}</td>
+        <td>{{ tender.supplier }}</td>
+        <td>{{ tender.supplier_discount }}</td>
+        <td>{{ tender.vat }}</td>
+        <td>{{ tender.note }}</td>
+        <td>{{ tender.manager }}</td>
+        <td>{{ tender.purchase_price }}</td>
+        <td>{{ tender.overall_info }}</td>
+        <td>{{ tender.date }}</td>
+        <td>{{ tender.deadline }}</td>
+        <td>{{ tender.procurement_type }}</td>
+        <td>{{ tender.paper_ad_link }}</td>
+        <td>{{ tender.lot_link }}</td>
+        <td>{{ tender.profit_rate }}</td>
+        <td>{{ tender.delivery_rate }}</td>
+        <td>{{ tender.purchase_price_per_unit }}</td>
+        <td>{{ tender.bidding_price_per_unit }}</td>
+        <td>{{ tender.budget_price_per_unit }}</td>
+        <td>{{ tender.overall_profit }}</td>
+        <td>{{ tender.overall_purchase_amount }}</td>
+        <td>{{ tender.overall_contract_amount }}</td>
+        <td>{{ tender.winning_price }}</td>
+        <td>{{ tender.commercial_offer_text }}</td>
+        <td>{{ tender.status }}</td>
+    </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% else %}
+<p>Объявления не добавлены</p>
+{% endif %}
+{% endblock %}
