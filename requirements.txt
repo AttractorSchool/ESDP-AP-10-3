@@ -2,3 +2,4 @@ Django==4.2.1
 django-environ==0.10.0
 pandas==2.0.1
 psycopg2-binary==2.9.6
+django-bootstrap-v5==1.0.11
