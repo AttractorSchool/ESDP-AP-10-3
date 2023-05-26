@@ -4,7 +4,6 @@ from datetime import datetime
 import pandas as pd
 from django.contrib import messages
 from django.views.generic import ListView
-
 from smarttender.models import Tender
 
 
