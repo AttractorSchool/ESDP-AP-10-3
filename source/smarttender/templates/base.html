@@ -43,6 +43,9 @@
                         </li>
                         {% else %}
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'product_list' %}">Товары</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">
                                 <img src="{% static 'media/login.svg' %}" alt="login" width="150" height="30">
                             </a>
