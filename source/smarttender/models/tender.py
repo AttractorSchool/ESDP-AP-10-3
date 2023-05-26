@@ -59,12 +59,26 @@ class Tender(models.Model):
         blank=True,
         verbose_name='Поставщик'
     )
+    price_without_discount = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name='Цена без скидки'
+    )
     supplier_discount = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         null=True,
         blank=True,
         verbose_name='Скидка от поставщика'
+    )
+    price_with_discount = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name='Цена со скидкой'
     )
     vat = models.DecimalField(
         max_digits=5,

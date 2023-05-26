@@ -3,7 +3,9 @@ from datetime import datetime
 
 import pandas as pd
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.views.generic import ListView
+
 from smarttender.models import Tender
 
 
@@ -11,6 +13,12 @@ class TenderListView(ListView):
     model = Tender
     template_name = 'index.html'
     context_object_name = 'tenders'
+    ordering = 'created_at'
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data()
+        return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
         if request.FILES and 'excel_file' in request.FILES:
@@ -78,4 +86,4 @@ class TenderListView(ListView):
             messages.success(request, 'Файл успешно загружен!')
         else:
             messages.error(request, 'Ошибка загрузки файла!')
-        return self.get(request, *args, **kwargs)
+        return redirect('index')
