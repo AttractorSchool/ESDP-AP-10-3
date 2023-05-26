@@ -1,109 +1,205 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Index{% endblock %}
 {% block content_heading %}
-<h3>Тендеры</h3>
+    <h3>Тендеры</h3>
 {% endblock %}
 {% block content %}
-<form method="post" enctype="multipart/form-data" class="row g-3">
-    {% csrf_token %}
-    <div class="col-auto">
-        <input class="form-control" type="file" name="excel_file">
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-outline-dark mb-3">Загрузить</button>
-    </div>
-</form>
-{% if messages %}
-{% for message in messages %}
-{% if message.tags == "success" %}
-<p style="color: green">{{ message }}</p>
-{% else %}
-<p style="color: red">{{ message }}</p>
-{% endif %}
-{% endfor %}
-{% endif %}
+    <form method="post" enctype="multipart/form-data" class="row g-3">
+        {% csrf_token %}
+        <div class="col-auto">
+            <input class="form-control" type="file" name="excel_file">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-dark mb-3">Загрузить</button>
+        </div>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "success" %}
+                <p style="color: green">{{ message }}</p>
+            {% else %}
+                <p style="color: red">{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 {% block table %}
-{% if tenders %}
-<table class="table table-bordered mt-3" id="tenderTable">
-    <thead class="table-primary">
-    <tr>
-        <th scope="col">№ лота</th>
-        <th scope="col">Учреждение</th>
-        <th scope="col">Наименование</th>
-        <th scope="col">Доп. инфо Т.С.</th>
-        <th scope="col">Цена за единицу</th>
-        <th scope="col">Количество</th>
-        <th scope="col">Единица измерения</th>
-        <th scope="col">Плановая сумма</th>
-        <th scope="col">Срок поставки</th>
-        <th scope="col">Наименование предлагаемого товара</th>
-        <th scope="col">Поставщик</th>
-        <th scope="col">% скидка от поставщика</th>
-        <th scope="col">НДС</th>
-        <th scope="col">Примечание</th>
-        <th scope="col">Менеджер</th>
-        <th scope="col">Цена закупа</th>
-        <th scope="col">Общая информация</th>
-        <th scope="col">Дата</th>
-        <th scope="col">Крайний срок</th>
-        <th scope="col">Вид закупа</th>
-        <th scope="col">№/ссылка на бумажное объявление</th>
-        <th scope="col">Ссылка на эл.лот (формируется автоматически)</th>
-        <th scope="col">Коэфф. прибыли</th>
-        <th scope="col">Коэфф. доставки</th>
-        <th scope="col">Цена закупа за ед.</th>
-        <th scope="col">Цена подачи за ед.</th>
-        <th scope="col">Цена бюджета за ед.</th>
-        <th scope="col">Общая прибыль с проекта</th>
-        <th scope="col">Общая сумма закупа</th>
-        <th scope="col">Общая сумма договора</th>
-        <th scope="col">Выигрыщная цена</th>
-        <th scope="col">Текст для КП</th>
-        <th scope="col">Статус объявления</th>
-    </tr>
-    </thead>
-    {% for tender in tenders %}
-    <tbody>
-    <tr>
-        <td>{{ tender.lot }}</td>
-        <td>{{ tender.company }}</td>
-        <td>{{ tender.name }}</td>
-        <td>{{ tender.additional_info }}</td>
-        <td>{{ tender.price_per_unit }}</td>
-        <td>{{ tender.quantity }}</td>
-        <td>{{ tender.measure_unit }}</td>
-        <td>{{ tender.planned_amount }}</td>
-        <td>{{ tender.delivery_deadline }}</td>
-        <td>{{ tender.proposed_product_name }}</td>
-        <td>{{ tender.supplier }}</td>
-        <td>{{ tender.supplier_discount }}</td>
-        <td>{{ tender.vat }}</td>
-        <td>{{ tender.note }}</td>
-        <td>{{ tender.manager }}</td>
-        <td>{{ tender.purchase_price }}</td>
-        <td>{{ tender.overall_info }}</td>
-        <td>{{ tender.date }}</td>
-        <td>{{ tender.deadline }}</td>
-        <td>{{ tender.procurement_type }}</td>
-        <td>{{ tender.paper_ad_link }}</td>
-        <td>{{ tender.lot_link }}</td>
-        <td>{{ tender.profit_rate }}</td>
-        <td>{{ tender.delivery_rate }}</td>
-        <td>{{ tender.purchase_price_per_unit }}</td>
-        <td>{{ tender.bidding_price_per_unit }}</td>
-        <td>{{ tender.budget_price_per_unit }}</td>
-        <td>{{ tender.overall_profit }}</td>
-        <td>{{ tender.overall_purchase_amount }}</td>
-        <td>{{ tender.overall_contract_amount }}</td>
-        <td>{{ tender.winning_price }}</td>
-        <td>{{ tender.commercial_offer_text }}</td>
-        <td>{{ tender.status }}</td>
-    </tr>
-    </tbody>
-    {% endfor %}
-</table>
-{% else %}
-<p>Объявления не добавлены</p>
-{% endif %}
+    {% if tenders %}
+        <table class="table table-bordered mt-3" id="tenderTable">
+            <thead class="table-primary">
+            <tr>
+                <th scope="col">№ лота</th>
+                <th scope="col">Учреждение</th>
+                <th scope="col">Наименование</th>
+                <th scope="col">Доп. инфо Т.С.</th>
+                <th scope="col">Цена за единицу</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Единица измерения</th>
+                <th scope="col">Плановая сумма</th>
+                <th scope="col">Срок поставки</th>
+                <th scope="col">Наименование предлагаемого товара</th>
+                <th scope="col">Поставщик</th>
+                <th scope="col">Цена без скидки</th>
+                <th scope="col">% скидка от поставщика</th>
+                <th scope="col">Цена со скидкой</th>
+                <th scope="col">НДС</th>
+                <th scope="col">Примечание</th>
+                <th scope="col">Менеджер</th>
+                <th scope="col">Цена закупа</th>
+                <th scope="col">Общая информация</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Крайний срок</th>
+                <th scope="col">Вид закупа</th>
+                <th scope="col">№/ссылка на бумажное объявление</th>
+                <th scope="col">Ссылка на эл.лот (формируется автоматически)</th>
+                <th scope="col">Коэфф. прибыли</th>
+                <th scope="col">Коэфф. доставки</th>
+                <th scope="col">Цена закупа за ед.</th>
+                <th scope="col">Цена подачи за ед.</th>
+                <th scope="col">Цена бюджета за ед.</th>
+                <th scope="col">Общая прибыль с проекта</th>
+                <th scope="col">Общая сумма закупа</th>
+                <th scope="col">Общая сумма договора</th>
+                <th scope="col">Выигрыщная цена</th>
+                <th scope="col">Текст для КП</th>
+                <th scope="col">Статус объявления</th>
+                <th scope="col">Действие</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tender in tenders %}
+                <tr data-tender-id="{{ tender.id }}">
+                    <td data-field="lot">{{ tender.lot }}</td>
+                    <td data-field="company">{{ tender.company }}</td>
+                    <td data-field="name">{{ tender.name }}</td>
+                    <td data-field="additional_info">{{ tender.additional_info }}</td>
+                    <td data-field="price_per_unit">{{ tender.price_per_unit }}</td>
+                    <td data-field="quantity">{{ tender.quantity }}</td>
+                    <td data-field="measure_unit">{{ tender.measure_unit }}</td>
+                    <td data-field="planned_amount">{{ tender.planned_amount }}</td>
+                    <td data-field="delivery_deadline">{{ tender.delivery_deadline }}</td>
+                    <td data-field="proposed_product_name">{{ tender.proposed_product_name }}</td>
+                    <td data-field="supplier">{{ tender.supplier }}</td>
+                    <td data-field="price_without_discount">{{ tender.price_withou_discount }}</td>
+                    <td data-field="supplier_discount">{{ tender.supplier_discount }}</td>
+                    <td data-field="price_with_discount">{{ tender.price_wit_discount }}</td>
+                    <td data-field="vat">{{ tender.vat }}</td>
+                    <td data-field="note">{{ tender.note }}</td>
+                    <td data-field="manager">{{ tender.manager }}</td>
+                    <td data-field="purchase_price">{{ tender.purchase_price }}</td>
+                    <td data-field="overall_info">{{ tender.overall_info }}</td>
+                    <td data-field="date">{{ tender.date }}</td>
+                    <td data-field="deadline">{{ tender.deadline }}</td>
+                    <td data-field="procurement_type">{{ tender.procurement_type }}</td>
+                    <td data-field="paper_ad_link">{{ tender.paper_ad_link }}</td>
+                    <td data-field="lot_link">{{ tender.lot_link }}</td>
+                    <td data-field="profit_rate">{{ tender.profit_rate }}</td>
+                    <td data-field="delivery_rate">{{ tender.delivery_rate }}</td>
+                    <td data-field="purchase_price_per_unit">{{ tender.purchase_price_per_unit }}</td>
+                    <td data-field="bidding_price_per_unit">{{ tender.bidding_price_per_unit }}</td>
+                    <td data-field="budget_price_per_unit">{{ tender.budget_price_per_unit }}</td>
+                    <td data-field="overall_profit">{{ tender.overall_profit }}</td>
+                    <td data-field="overall_purchase_amount">{{ tender.overall_purchase_amount }}</td>
+                    <td data-field="overall_contract_amount">{{ tender.overall_contract_amount }}</td>
+                    <td data-field="winning_price">{{ tender.winning_price }}</td>
+                    <td data-field="commercial_offer_text">{{ tender.commercial_offer_text }}</td>
+                    <td data-field="status">{{ tender.status }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary edit-tender">Редактировать</button>
+                        <button class="btn btn-sm btn-success save-tender" style="display: none;">Сохранить</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                function updateTender(tenderId, supplier, price_without_discount, supplier_discount, price_with_discount, vat, note, purchase_price) {
+                    let csrftoken = "{{ csrf_token }}";
+
+                    price_without_discount = price_without_discount.replace(',', '.');
+                    supplier_discount = supplier_discount.replace(',', '.');
+                    price_with_discount = price_with_discount.replace(',', '.');
+                    vat = vat.replace(',', '.');
+                    purchase_price = purchase_price.replace(',', '.');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/update_tender/',
+                        headers: {
+                            "X-CSRFToken": csrftoken
+                        },
+                        data: {
+                            'tender_id': tenderId,
+                            'supplier': supplier,
+                            'price_without_discount': price_without_discount,
+                            'supplier_discount': supplier_discount,
+                            'price_with_discount': price_with_discount,
+                            'vat': vat,
+                            'note': note,
+                            'purchase_price': purchase_price
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            let row = $('#tenderTable').find('tr[data-tender-id="' + tenderId + '"]');
+                            row.find('td[data-field="supplier"]').text(response.supplier);
+                            row.find('td[data-field="price_without_discount"]').text(response.price_without_discount);
+                            row.find('td[data-field="supplier_discount"]').text(response.supplier_discount);
+                            row.find('td[data-field="price_with_discount"]').text(response.price_with_discount);
+                            row.find('td[data-field="vat"]').text(response.vat);
+                            row.find('td[data-field="note"]').text(response.note);
+                            row.find('td[data-field="purchase_price"]').text(response.purchase_price);
+                            row.find('.edit-tender').show();
+                            row.find('.save-tender').hide();
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+
+                $('#tenderTable').on('click', '.edit-tender', function () {
+                    let row = $(this).closest('tr');
+                    let tenderId = row.data('tender-id');
+                    let supplier = row.find('td[data-field="supplier"]').text();
+                    let price_without_discount = row.find('td[data-field="price_without_discount"]').text();
+                    let supplier_discount = row.find('td[data-field="supplier_discount"]').text();
+                    let price_with_discount = row.find('td[data-field="price_with_discount"]').text();
+                    let vat = row.find('td[data-field="vat"]').text();
+                    let note = row.find('td[data-field="note"]').text();
+                    let purchase_price = row.find('td[data-field="purchase_price"]').text();
+
+                    row.find('.edit-tender').hide();
+                    row.find('.save-tender').show();
+
+                    row.find('td[data-field="supplier"]').html('<input class="form-control" type="text" value="' + supplier + '">');
+                    row.find('td[data-field="price_without_discount"]').html('<input class="form-control" type="text" value="' + price_without_discount + '">');
+                    row.find('td[data-field="supplier_discount"]').html('<input class="form-control" type="text" value="' + supplier_discount + '">');
+                    row.find('td[data-field="price_with_discount"]').html('<input class="form-control" type="text" value="' + price_with_discount + '">');
+                    row.find('td[data-field="vat"]').html('<input class="form-control" type="text" value="' + vat + '">');
+                    row.find('td[data-field="note"]').html('<input class="form-control" type="text" value="' + note + '">');
+                    row.find('td[data-field="purchase_price"]').html('<input class="form-control" type="text" value="' + purchase_price + '">');
+                });
+
+                $('#tenderTable').on('click', '.save-tender', function () {
+                    let row = $(this).closest('tr');
+                    let tenderId = row.data('tender-id');
+                    let editedSupplier = row.find('td[data-field="supplier"] input').val().trim();
+                    let editedPriceWithoutDiscount = row.find('td[data-field="price_without_discount"] input').val().trim();
+                    let editedSupplierDiscount = row.find('td[data-field="supplier_discount"] input').val().trim();
+                    let editedPriceWithDiscount = row.find('td[data-field="price_with_discount"] input').val().trim();
+                    let editedVat = row.find('td[data-field="vat"] input').val().trim();
+                    let editedNote = row.find('td[data-field="note"] input').val().trim();
+                    let editedPurchasePrice = row.find('td[data-field="purchase_price"] input').val().trim();
+
+                    updateTender(tenderId, editedSupplier, editedPriceWithoutDiscount, editedSupplierDiscount, editedPriceWithDiscount,
+                        editedVat, editedNote, editedPurchasePrice);
+                });
+            });
+        </script>
+    {% else %}
+        <p>Объявления не добавлены</p>
+    {% endif %}
 {% endblock %}
