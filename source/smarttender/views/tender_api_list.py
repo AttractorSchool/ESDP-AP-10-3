@@ -33,8 +33,7 @@ class TenderAPIListView(ListView):
                 tender = TenderAPI(
                     lot=tender['number_anno'],
                     company=tender['org_name_ru'],
-                    name=tender['name_ru'],
-                    deadline=tender['end_date']
+                    name=tender['name_ru']
                 )
                 tender.save()
         return self.get(request, *args, **kwargs)
