@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Products{% endblock %}
+{% block content_heading %}
+<h3>Товары</h3>
+{% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="row g-3">
+    {% csrf_token %}
+    <div class="col-auto">
+        <input class="form-control" type="file" name="excel_file">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-dark mb-3">Загрузить</button>
+    </div>
+</form>
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == "success" %}
+<p style="color: green">{{ message }}</p>
+{% else %}
+<p style="color: red">{{ message }}</p>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block table %}
+{% if products %}
+<table class="table table-bordered mt-3" id="tenderTable">
+    <thead class="table-primary">
+    <tr>
+        <th scope="col">Номер</th>
+        <th scope="col">Рег. номер</th>
+        <th scope="col">Тип</th>
+        <th scope="col">Торговое название</th>
+        <th scope="col">Вид</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+    <tr>
+        <td>{{ product.number }}</td>
+        <td>{{ product.register_number }}</td>
+        <td>{{ product.type }}</td>
+        <td>{{ product.trade_name }}</td>
+        <td>{{ product.view }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Товары не добавлены</p>
+{% endif %}
+{% endblock %}

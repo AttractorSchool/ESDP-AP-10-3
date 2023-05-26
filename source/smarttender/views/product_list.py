@@ -9,7 +9,7 @@ from smarttender.models import Product
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'index.html'
+    template_name = 'product_list.html'
     context_object_name = 'products'
 
     def post(self, request, *args, **kwargs):
