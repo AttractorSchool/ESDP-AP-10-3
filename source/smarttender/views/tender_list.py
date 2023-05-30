@@ -1,11 +1,9 @@
 import math
 from datetime import datetime
-
 import pandas as pd
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import ListView
-
 from smarttender.models import Tender
 
 
@@ -14,6 +12,11 @@ class TenderListView(ListView):
     template_name = 'index.html'
     context_object_name = 'tenders'
     ordering = 'created_at'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()

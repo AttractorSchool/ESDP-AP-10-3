@@ -23,10 +23,10 @@
                     <img src="{% static 'media/logo.png' %}" alt="" width="150" height="30"
                          class="d-inline-block align-text-center">
                 </a>
-                {% block menu %}{% endblock %}
                 <div class="collapse navbar-collapse justify-content-end text-uppercase" id="navbarNav">
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
+                        {% block menu %}{% endblock %}
                         <li class="nav-item">
                             <a class="nav-link active nav_username" aria-current="page"
                                href="#">
@@ -34,19 +34,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Поставщики</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                <img src="{% static 'media/logout.svg' %}" alt="logout" width="150" height="30">
+                            <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">
+                                <img src="{% static 'media/logoff.svg' %}" alt="logout" width="150" height="30">
                             </a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'product_list' %}">Товары</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
+                            <a class="nav-link active" aria-current="page" href="{% url 'login' %}">
                                 <img src="{% static 'media/login.svg' %}" alt="login" width="150" height="30">
                             </a>
                         </li>
