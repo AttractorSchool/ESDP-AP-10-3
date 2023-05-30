@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+    <form method="post">
+       <div class="form">
+            {% csrf_token %}
+        {% bootstrap_form form %}
+       </div>
+        <div class="form_row">
+            {% bootstrap_button button_type="submit" content='Войти' %}
+        </div>
+    </form>
+{% endblock %}
