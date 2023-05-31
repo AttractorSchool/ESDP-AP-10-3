@@ -5,3 +5,36 @@ td {
   text-overflow: ellipsis;
   cursor: pointer;
 }
+
+.modal-content {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(51%, -3%);
+  width: 100%;
+  max-width: 507px;
+  overflow-y: auto;
+  background-color: #fefefe;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
