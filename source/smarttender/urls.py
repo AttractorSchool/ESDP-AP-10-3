@@ -1,6 +1,6 @@
 from django.urls import path
-
 from smarttender.views import TenderListView, ProductListView, update_tender, TenderAPIListView
+
 
 urlpatterns = [
     path('', TenderListView.as_view(), name='index'),

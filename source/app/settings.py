@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'smarttender',
-    'bootstrap5'
+    'bootstrap5',
+    "accounts"
 ]
 
 MIDDLEWARE = [
