@@ -78,10 +78,9 @@
         <td data-field="planned_amount">{{ tender.planned_amount }}</td>
         <td data-field="delivery_deadline">{{ tender.delivery_deadline }}</td>
         <td data-field="proposed_product_name" class="modal-provider-name">
-            <button type="button" class="btn btn-primary" style="margin-left: 7px" data-toggle="modal"
-                    data-target="#myCustomModal" data-product-name="Product 2">Подобрать
-            </button>
-        </td>
+<button class="btn btn-primary" onclick="window.open('{% url 'similar_products' tender.id %}','popup','width=600,height=600'); return false;">
+    Подобрать
+</button>
         <td data-field="supplier">{{ tender.supplier }}</td>
         <td data-field="price_without_discount">{{ tender.price_withou_discount }}</td>
         <td data-field="supplier_discount">{{ tender.supplier_discount }}</td>
@@ -167,3 +166,4 @@
 <p>Объявления не добавлены</p>
 {% endif %}
 {% endblock %}
+
