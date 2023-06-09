@@ -59,7 +59,7 @@
         <th scope="col">Общая прибыль с проекта</th>
         <th scope="col">Общая сумма закупа</th>
         <th scope="col">Общая сумма договора</th>
-        <th scope="col">Выигрыщная цена</th>
+        <th scope="col">Выигрышная цена</th>
         <th scope="col">Текст для КП</th>
         <th scope="col">Статус объявления</th>
         <th scope="col">Действие</th>
@@ -68,41 +68,8 @@
     <tbody>
     {% for tender in tenders %}
     <tr data-tender-id="{{ tender.id }}">
-        <td data-field="lot" class="modal-trigger"
-            data-lot="{{ tender.lot }}"
-            data-company="{{ tender.company }}"
-            data-name="{{ tender.name }}"
-            data-additional-info="{{ tender.additional_info }}"
-            data-price-per-unit="{{ tender.price_per_unit }}"
-            data-quantity="{{ tender.quantity }}"
-            data-measure-unit="{{ tender.measure_unit }}"
-            data-planned-amount="{{ tender.planned_amount }}"
-            data-delivery-deadline="{{ tender.delivery_deadline }}"
-            data-proposed-product-name="{{ tender.proposed_product_name }}"
-            data-supplier="{{ tender.supplier }}"
-            data-supplier-discount="{{ tender.supplier_discount }}"
-            data-vat="{{ tender.vat }}"
-            data-note="{{ tender.note }}"
-            data-manager="{{ tender.manager }}"
-            data-purchase-price="{{ tender.purchase_price }}"
-            data-overall-info="{{ tender.overall_info }}"
-            data-date="{{ tender.date }}"
-            data-deadline="{{ tender.deadline }}"
-            data-procurement-type="{{ tender.procurement_type }}"
-            data-paper-ad-link="{{ tender.paper_ad_link }}"
-            data-lot-link="{{ tender.lot_link }}"
-            data-profit-rate="{{ tender.profit_rate }}"
-            data-delivery-rate="{{ tender.delivery_rate }}"
-            data-purchase-price-per-unit="{{ tender.purchase_price_per_unit }}"
-            data-bidding-price-per-unit="{{ tender.bidding_price_per_unit }}"
-            data-budget-price-per-unit="{{ tender.budget_price_per_unit }}"
-            data-overall-profit="{{ tender.overall_profit }}"
-            data-overall-purchase-amount="{{ tender.overall_purchase_amount }}"
-            data-overall-contract-amount="{{ tender.overall_contract_amount }}"
-            data-winning-price="{{ tender.winning_price }}"
-            data-commercial-offer-text="{{ tender.commercial_offer_text }}"
-            data-status="{{ tender.status }}"
-        >{{ tender.lot }}
+        <td data-field="lot" class="modal-trigger" data-cell-id="{{ tender.id }}"
+            data-lot="{{ tender.lot }}">
         </td>
         <td data-field="company">{{ tender.company }}</td>
         <td data-field="name">{{ tender.name }}</td>
@@ -115,8 +82,6 @@
                     data-target="#myCustomModal" data-product-name="Product 2">Подобрать
             </button>
         </td>
-
-
         <td data-field="supplier">{{ tender.supplier }}</td>
         <td data-field="price_without_discount">{{ tender.price_withou_discount }}</td>
         <td data-field="supplier_discount">{{ tender.supplier_discount }}</td>
@@ -150,10 +115,55 @@
     {% endfor %}
     </tbody>
 </table>
-{% include 'partial/partial.html' %}
-{% include 'partial/partial_2.html' %}
+<div class="modal modal-dialog-scrollable" id="myModal" style="height: 100%">
+    <div class="modal-dialog">
+        <div class="modal-content" style="padding: 30px">
+            <span class="close"></span>
+            <div><b>
+                Лот:
+            </b>
+                <p id="modal-lot"></p>
+            </div>
+            <div><b>Учреждение: </b><p id="modal-company"></p></div>
+            <div><b>Наименование: </b><p id="modal-name"></p></div>
+            <div><b>Цена за единицу: </b><p id="modal-price_per_unit"></p></div>
+            <div><b>Количество: </b><p id="modal-quantity"></p></div>
+            <div><b>Плановая сумма: </b><p id="modal-planned_amount"></p></div>
+            <div><b>Срок поставки: </b><p id="modal-delivery_deadline"></p></div>
+            <div><b>Наименование предлагаемого товара: </b><p id="modal-proposed_product_name"></p></div>
+            <div><b>Поставщик: </b><p id="modal-supplier"></p></div>
+            <div><b>Цена без скидки : </b><p id="modal-price_without_discount"></p></div>
+            <div><b>Скидка от поставщика : </b><p id="modal-supplier_discount"></p></div>
+            <div><b>Цена со скидкой : </b><p id="modal-price_with_discount"></p></div>
+            <div><b>НДС : </b><p id="modal-vat"></p></div>
+            <div><b>Примечание : </b><p id="modal-note"></p></div>
+            <div><b>Менеджер : </b><p id="modal-manager"></p></div>
+            <div><b>Цена закупа : </b><p id="modal-purchase_price"></p></div>
+            <div><b>Дата : </b><p id="modal-date"></p></div>
+            <div><b>Крайний срок : </b><p id="modal-deadline"></p></div>
+            <div><b>Вид закупа : </b><p id="modal-procurement_type"></p></div>
+            <div><b>Ссылка на бумажное объявление : </b>
+                <a href="https://okbkar.kz/ru/gosudarstvennye-zakupki/631-tender-ot-22-12-2022.html"
+               style="text-decoration: none">
+                <p id="modal-paper_ad_link"></p>
+            </a></div>
+            <div><b>Коэффицент доставки : </b><p id="modal-profit_rate"></p></div>
+            <div><b>Коэффицент прибыли : </b><p id="modal-delivery_rate"></p></div>
+            <div><b>Цена закупа за ед. : </b><p id="modal-purchase_price_per_unit"></p></div>
+            <div><b>Цена подачи за ед. : </b><p id="modal-bidding_price_per_unit"></p></div>
+            <div><b>Цена бюджета за ед. : </b><p id="modal-budget_price_per_unit"></p></div>
+            <div><b>Общая прибыль проекта : </b><p id="modal-overall_profit"></p></div>
+            <div><b>Общая сумма закупа : </b><p id="modal-overall_purchase_amount"></p></div>
+            <div><b>Общая сумма договора : </b><p id="modal-overall_contract_amount"></p></div>
+            <div><b>Выигрышная цена : </b><p id="modal-winning_price"></p></div>
+            <div><b>Статус Объявления : </b><p id="modal-status"></p></div>
+            <button class="btn btn-sm btn-primary edit-tender">Редактировать</button>
+            <button class="btn btn-sm btn-success save-tender" style="display: none;">Сохранить</button>
+        </div>
+    </div>
+</div>
+<script src="static/js/modal.js"></script>
 {% else %}
 <p>Объявления не добавлены</p>
 {% endif %}
 {% endblock %}
-

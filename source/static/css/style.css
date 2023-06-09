@@ -38,3 +38,7 @@ td {
   cursor: pointer;
 }
 
+b {
+  margin-right: 5px;
+  float: left;
+}
