@@ -34,13 +34,13 @@
                             <p class="welcome_user m-0">Добро пожаловать, {{ request.user.username.capitalize }}</p>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
+                            <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">
                                 <img src="{% static 'media/logout.svg' %}" alt="logout" width="150" height="30">
                             </a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
+                            <a class="nav-link active" aria-current="page" href="{% url 'login' %}">
                                 <img src="{% static 'media/login.svg' %}" alt="login" width="150" height="30">
                             </a>
                         </li>
