@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.utils.http import urlencode
 from django.views.generic import ListView
@@ -8,7 +9,7 @@ from smarttender.models import Tender
 from smarttender.utils import parse_excel_file
 
 
-class TenderListView(ListView):
+class TenderListView(LoginRequiredMixin, ListView):
     model = Tender
     template_name = 'index.html'
     context_object_name = 'tenders'
