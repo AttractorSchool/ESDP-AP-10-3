@@ -4,6 +4,7 @@ from datetime import datetime
 import pandas as pd
 from django.contrib import messages
 from django.views.generic import ListView
+
 from smarttender.models import Product
 
 
@@ -19,9 +20,11 @@ class ProductListView(ListView):
             for index, row in df.iterrows():
                 row = [value if not (isinstance(value, float) and math.isnan(value)) else None for value in row]
                 a = row[5].replace(' ', '').replace(',', '.')
-                register_date = datetime.strptime(str(a), '%d.%m.%Y').strftime('%Y-%m-%d') if row[5] is not None else None
-                #time = datetime.strptime(str(row[6]), '%d.%m.%Y').strftime('%Y-%m-%d') if row[6] is not None else None
-                deadline = datetime.strptime(str(row[7]), '%d.%m.%Y').strftime('%Y-%m-%d') if row[7] is not None else None
+                register_date = datetime.strptime(str(a), '%d.%m.%Y').strftime('%Y-%m-%d') if row[
+                                                                                                  5] is not None else None
+                # time = datetime.strptime(str(row[6]), '%d.%m.%Y').strftime('%Y-%m-%d') if row[6] is not None else None
+                deadline = datetime.strptime(str(row[7]), '%d.%m.%Y').strftime('%Y-%m-%d') if row[
+                                                                                                  7] is not None else None
                 product = Product(
                     number=row[0],
                     register_number=row[1],
