@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Similar Products</title>
+</head>
+<body>
+    <h1>Похожие товары по МНН для: {{ tender.name }}
+    </h1>{% if selected_product%}
+    <h2>Selected Product:</h2>
+    <p>{{ selected_product }}</p>
+    {% endif %}
+    <form method="POST" action="{% url 'selected_product' %}">
+        {% csrf_token %}
+        <input type="hidden" name="tender_id" value="{{ tender.id }}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Торговое наименование</th>
+                    <th>Производитель</th>
+                    <th>Страна производителя</th>
+                    <th>Дата регистрации</th>
+                    <th>Выбрать</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in product_list %}
+                <tr>
+                    <td>{{ product.trade_name }}</td>
+                    <td>{{ product.producer }}</td>
+                    <td>{{ product.country }}</td>
+                    <td>{{ product.register_date }}</td>
+                    <td><input type="radio" name="selected_product" value="{{ product.trade_name }}"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Select Product</button>
+    </form>
+</body>
+</html>
