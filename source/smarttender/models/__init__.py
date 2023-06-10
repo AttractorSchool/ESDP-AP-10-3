@@ -4,3 +4,4 @@ from .tender import Tender
 from .file import File
 from .lot import Lot
 from .plan import Plan
+from .ref_trade_method import RefTradeMethod
