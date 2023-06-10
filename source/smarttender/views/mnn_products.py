@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponse
 
 def find_similar_products(request, tender_id):
     tender = Tender.objects.get(id=tender_id)
-    similar_products = Product.objects.filter(trade_name__icontains=tender.name)
+    similar_products = Product.objects.filter(trade_name__icontains=tender.lot.name_ru)
     product_list = []
     for product in similar_products:
         product_data = {
@@ -24,7 +24,7 @@ def find_similar_products(request, tender_id):
 
 def similar_products(request, tender_id):
     tender = Tender.objects.get(id=tender_id)
-    similar_products = Product.objects.filter(trade_name__icontains=tender.name)
+    similar_products = Product.objects.filter(trade_name__icontains=tender.lot.name_ru)
     product_list = []
     for product in similar_products:
         product_data = {
