@@ -1,11 +1,12 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+
 from smarttender.models import Tender, Product
-from django.http import JsonResponse, HttpResponse
 
 
 def find_similar_products(request, tender_id):
     tender = Tender.objects.get(id=tender_id)
-    similar_products = Product.objects.filter(trade_name__icontains=tender.name)
+    similar_products = Product.objects.filter(trade_name__icontains=tender.lot.name_ru)
     product_list = []
     for product in similar_products:
         product_data = {
@@ -24,7 +25,7 @@ def find_similar_products(request, tender_id):
 
 def similar_products(request, tender_id):
     tender = Tender.objects.get(id=tender_id)
-    similar_products = Product.objects.filter(trade_name__icontains=tender.name)
+    similar_products = Product.objects.filter(trade_name__icontains=tender.lot.name_ru)
     product_list = []
     for product in similar_products:
         product_data = {
@@ -55,4 +56,3 @@ def selected_product(request):
         return redirect('similar_products', tender_id=tender_id)
     else:
         return JsonResponse({'error': 'Invalid request method.'})
-

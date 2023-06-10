@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
+
 from smarttender.models import Tender
 
 
