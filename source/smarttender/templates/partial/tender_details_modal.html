@@ -1,0 +1,86 @@
+<div class="modal modal-dialog-scrollable" id="myModal" style="height: 100%">
+    <div class="modal-dialog">
+        <div class="modal-content tender_details_modal" style="padding: 30px">
+            <span class="close"></span>
+            <div><b>
+                № лота:
+            </b>
+                <p id="modal-lot_number"></p>
+            </div>
+            <div><b>Учреждение: </b>
+                <p id="modal-customer_name_ru"></p></div>
+            <div><b>Наименование: </b>
+                <p id="modal-name_ru"></p></div>
+            <div><b>Дополнительная информация: </b>
+                <p id="modal-description_ru"></p></div>
+            <div><b>Цена за единицу: </b>
+                <p id="modal-price"></p></div>
+            <div><b>Количество: </b>
+                <p id="modal-count"></p></div>
+            <div><b>Единица измерения: </b>
+                <p id="modal-ref_unit"></p></div>
+            <div><b>Плановая сумма: </b>
+                <p id="modal-amount"></p></div>
+            <div><b>Срок поставки: </b>
+                <p id="modal-supply_date_ru"></p></div>
+            <div><b>Наименование предлагаемого товара: </b>
+                <!--                <p id="modal-products"></p>-->
+                <div data-field="proposed_product_name" class="modal-provider-name">
+                    <button class="btn btn-primary"
+                            onclick="window.open('{% url 'similar_products' tender.id %}','popup','width=600,height=600'); return false;">
+                        Подобрать
+                    </button>
+                </div>
+            </div>
+            <div><b>Поставщик: </b>
+                <p id="modal-suppliers"></p></div>
+            <div><b>Цена без скидки : </b>
+                <!--                <p id="modal-price_without_discount"></p></div>-->
+                <!--            <div><b>Скидка от поставщика : </b>-->
+                <p id="modal-supplier_discount"></p></div>
+            <div><b>Цена со скидкой : </b>
+                <!--                <p id="modal-price_with_discount"></p></div>-->
+                <!--            <div><b>НДС : </b>-->
+                <p id="modal-vat"></p></div>
+            <div><b>Примечание : </b>
+                <p id="modal-note"></p></div>
+            <div><b>Менеджер : </b>
+                <p id="modal-manager"></p></div>
+            <div><b>Цена закупа : </b>
+                <p id="modal-purchase_price"></p></div>
+            <div><b>Дата : </b>
+                <p id="modal-publish_date"></p></div>
+            <div><b>Крайний срок : </b>
+                <p id="modal-end_date"></p></div>
+            <div><b>Вид закупа : </b>
+                <p id="modal-ref_trade_method"></p></div>
+            <div><b>Ссылка на бумажное объявление : </b>
+                <a href="https://okbkar.kz/ru/gosudarstvennye-zakupki/631-tender-ot-22-12-2022.html"
+                   style="text-decoration: none">
+                    <p id="modal-paper_ad_link"></p>
+                </a></div>
+            <div><b>Коэффицент доставки : </b>
+                <p id="modal-profit_rate"></p></div>
+            <div><b>Коэффицент прибыли : </b>
+                <p id="modal-delivery_rate"></p></div>
+            <div><b>Цена закупа за ед. : </b>
+                <p id="modal-purchase_price_per_unit"></p></div>
+            <div><b>Цена подачи за ед. : </b>
+                <p id="modal-bidding_price_per_unit"></p></div>
+            <div><b>Цена бюджета за ед. : </b>
+                <p id="modal-budget_price_per_unit"></p></div>
+            <div><b>Общая прибыль проекта : </b>
+                <p id="modal-overall_profit"></p></div>
+            <div><b>Общая сумма закупа : </b>
+                <p id="modal-overall_purchase_amount"></p></div>
+            <div><b>Общая сумма договора : </b>
+                <p id="modal-overall_contract_amount"></p></div>
+            <div><b>Выигрышная цена : </b>
+                <p id="modal-winning_price"></p></div>
+            <div><b>Статус Объявления : </b>
+                <p id="modal-status"></p></div>
+            <button class="btn btn-sm btn-primary edit-tender">Редактировать</button>
+            <button class="btn btn-sm btn-success save-tender" style="display: none;">Сохранить</button>
+        </div>
+    </div>
+</div>

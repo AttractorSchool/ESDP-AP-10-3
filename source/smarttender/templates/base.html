@@ -23,19 +23,19 @@
                     <img src="{% static 'media/logo.png' %}" alt="" width="150" height="30"
                          class="d-inline-block align-text-center">
                 </a>
-                <div class="collapse navbar-collapse justify-content-end text-uppercase" id="navbarNav">
+                <div class="navbar_item ms-5">
+                    {% block navbar_item %}{% endblock %}
+                </div>
+                {% block menu %}{% endblock %}
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
-                        {% block menu %}{% endblock %}
-                        <li class="nav-item">
-                            <a class="nav-link active nav_username" aria-current="page"
-                               href="#">
-                                {{ request.user.username }}
-                            </a>
+                        <li class="nav-item d-flex align-items-center">
+                            <p class="welcome_user m-0">Добро пожаловать, {{ request.user.username.capitalize }}</p>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">
-                                <img src="{% static 'media/logoff.svg' %}" alt="logout" width="150" height="30">
+                                <img src="{% static 'media/logout.svg' %}" alt="logout" width="150" height="30">
                             </a>
                         </li>
                         {% else %}
@@ -58,11 +58,15 @@
         </div>
         {% block content %}{% endblock %}
     </div>
-    <div class="tender_table ps-5 pe-5">
-        {% block table %}{% endblock %}
-    </div>
 </div>
 
-<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/tenderTableHideNone.js' %}"></script>
+<script src="{% static 'js/selectAllTenders.js' %}"></script>
+<script src="{% static 'js/expandTable.js' %}"></script>
+<script src="{% static 'js/uploadProgress.js' %}"></script>
+<script src="{% static 'js/uploadTendersByGraphQL.js' %}"></script>
+<script src="{% static 'js/saveSelectedTenders.js' %}"></script>
+<script src="{% static 'js/loadEnsTruCodes.js' %}"></script>
+<script src="{% static 'js/tenderDetailsModal.js' %}"></script>
 </body>
 </html>

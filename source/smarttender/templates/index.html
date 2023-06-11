@@ -1,19 +1,50 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block title %}Index{% endblock %}
+{% block title %}Главная страница{% endblock %}
+{% block navbar_item %}
+{% include 'partial/search_form.html' %}
+{% endblock %}
 {% block content_heading %}
 <h3>Тендеры</h3>
 {% endblock %}
 {% block content %}
-<form method="post" enctype="multipart/form-data" class="row g-3">
+
+<!--Загрузка Excel файла-->
+<form id="upload-form" method="post" enctype="multipart/form-data" class="row g-3">
     {% csrf_token %}
     <div class="col-auto">
-        <input class="form-control" type="file" name="excel_file">
+        <input class="form-control" type="file" name="excel_file" id="excel-file-input">
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-outline-dark mb-3">Загрузить</button>
+        <button type="submit" class="btn btn-outline-dark mb-3" id="upload-button">Загрузить из файла</button>
     </div>
 </form>
+
+<!--Процесс загрузки-->
+<div id="progress-container" style="display: none;">
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" id="progress-bar" role="progressbar"
+             style="width: 0%"></div>
+    </div>
+    <div id="progress-status"></div>
+</div>
+
+<!--Поиск по коду ЕНС ТРУ. Если значение пустое, то загружает все объявления-->
+<div class="d-flex tenders_search mt-3" id="searchForm">
+    <input class="form-control me-2" type="search" placeholder="Введите код ЕНС ТРУ" aria-label="Search"
+           style="width: 280px;" name="search_value" id="searchValueInput">
+    <button type="button" class="btn btn-outline-dark me-3" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            id="loadTendersBtn">Загрузить
+    </button>
+    <!--Модальное окно с полученными объявлениями-->
+    {% include 'partial/tenders_modal.html' %}
+
+    <button type="button" class="btn btn-outline-dark me-3" data-bs-toggle="modal" data-bs-target="#exampleModalEnsTru"
+            id="loadEnsTruCodesBtn">Коды ЕНС ТРУ
+    </button>
+    <!--Модальное окно с кодами ЕНС ТРУ-->
+    {% include 'partial/enstru_codes_modal.html' %}
+</div>
+
 {% if messages %}
 {% for message in messages %}
 {% if message.tags == "success" %}
@@ -23,147 +54,60 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% endblock %}
-{% block table %}
+{% if is_paginated %}
+{% include 'partial/pagination.html' %}
+{% endif %}
 {% if tenders %}
-<table class="table table-bordered mt-3" id="tenderTable">
+
+<!--Вывод объявлений из БД-->
+<table class="table table-bordered table-hover mt-5" id="tenderTable">
     <thead class="table-primary">
     <tr>
         <th scope="col">№ лота</th>
         <th scope="col">Учреждение</th>
         <th scope="col">Наименование</th>
+        <th scope="col">Доп. инфо Т.С.</th>
         <th scope="col">Цена за единицу</th>
         <th scope="col">Количество</th>
+        <th scope="col">Единица измерения</th>
         <th scope="col">Плановая сумма</th>
         <th scope="col">Срок поставки</th>
-        <th scope="col">Наименование предлагаемого товара</th>
-        <th scope="col">Поставщик</th>
-        <th scope="col">Цена без скидки</th>
-        <th scope="col">% скидка от поставщика</th>
-        <th scope="col">Цена со скидкой</th>
-        <th scope="col">НДС</th>
-        <th scope="col">Примечание</th>
-        <th scope="col">Менеджер</th>
-        <th scope="col">Цена закупа</th>
-        <th scope="col">Общая информация</th>
-        <th scope="col">Дата</th>
-        <th scope="col">Крайний срок</th>
-        <th scope="col">Вид закупа</th>
-        <th scope="col">№/ссылка на бумажное объявление</th>
-        <th scope="col">Ссылка на эл.лот (формируется автоматически)</th>
-        <th scope="col">Коэфф. прибыли</th>
-        <th scope="col">Коэфф. доставки</th>
-        <th scope="col">Цена закупа за ед.</th>
-        <th scope="col">Цена подачи за ед.</th>
-        <th scope="col">Цена бюджета за ед.</th>
-        <th scope="col">Общая прибыль с проекта</th>
-        <th scope="col">Общая сумма закупа</th>
-        <th scope="col">Общая сумма договора</th>
-        <th scope="col">Выигрышная цена</th>
-        <th scope="col">Текст для КП</th>
-        <th scope="col">Статус объявления</th>
-        <th scope="col">Действие</th>
+        <th scope="col">Подробная информация</th>
     </tr>
     </thead>
-    <tbody>
     {% for tender in tenders %}
-    <tr data-tender-id="{{ tender.id }}">
-        <td data-field="lot" class="modal-trigger" data-cell-id="{{ tender.id }}"
+    <tbody>
+    <tr class="tender-row" data-tender-id="{{ tender.id }}">
+        <td class="tender-cell">{{ tender.lot.lot_number }}</td>
+        <td class="tender-cell">{{ tender.lot.customer_name_ru }}</td>
+        <td class="tender-cell">{{ tender.lot.name_ru }}</td>
+        <td class="tender-cell">{{ tender.lot.description_ru }}</td>
+        {% if tender.lot.plans.price is not null %}
+        <td class="tender-cell">KZT {{ tender.lot.plans.price }}</td>
+        {% else %}
+        <td class="tender-cell">{{ tender.lot.plans.price }}</td>
+        {% endif %}
+        <td class="tender-cell">{{ tender.lot.plans.count }}</td>
+        <td class="tender-cell">{{ tender.lot.plans.ref_units.name_ru }}</td>
+        <td class="tender-cell">KZT {{ tender.lot.plans.amount }}</td>
+        <td class="tender-cell">{{ tender.lot.plans.supply_date_ru }}</td>
+        <td data-field="lot" class="modal-trigger text-center" data-cell-id="{{ tender.id }}"
             data-lot="{{ tender.lot }}">
+            <button class="btn btn-secondary">
+                Подробнее
+            </button>
         </td>
-        <td data-field="company">{{ tender.company }}</td>
-        <td data-field="name">{{ tender.name }}</td>
-        <td data-field="price_per_unit">{{ tender.price_per_unit }}</td>
-        <td data-field="quantity">{{ tender.quantity }}</td>
-        <td data-field="planned_amount">{{ tender.planned_amount }}</td>
-        <td data-field="delivery_deadline">{{ tender.delivery_deadline }}</td>
-        <td data-field="proposed_product_name" class="modal-provider-name">
-<button class="btn btn-primary" onclick="window.open('{% url 'similar_products' tender.id %}','popup','width=600,height=600'); return false;">
-    Подобрать
-</button>
-        <td data-field="supplier">{{ tender.supplier }}</td>
-        <td data-field="price_without_discount">{{ tender.price_withou_discount }}</td>
-        <td data-field="supplier_discount">{{ tender.supplier_discount }}</td>
-        <td data-field="price_with_discount">{{ tender.price_wit_discount }}</td>
-        <td data-field="vat">{{ tender.vat }}</td>
-        <td data-field="note">{{ tender.note }}</td>
-        <td data-field="manager">{{ tender.manager }}</td>
-        <td data-field="purchase_price">{{ tender.purchase_price }}</td>
-        <td data-field="overall_info">{{ tender.overall_info }}</td>
-        <td data-field="date">{{ tender.date }}</td>
-        <td data-field="deadline">{{ tender.deadline }}</td>
-        <td data-field="procurement_type">{{ tender.procurement_type }}</td>
-        <td data-field="paper_ad_link">{{ tender.paper_ad_link }}</td>
-        <td data-field="lot_link">{{ tender.lot_link }}</td>
-        <td data-field="profit_rate">{{ tender.profit_rate }}</td>
-        <td data-field="delivery_rate">{{ tender.delivery_rate }}</td>
-        <td data-field="purchase_price_per_unit">{{ tender.purchase_price_per_unit }}</td>
-        <td data-field="bidding_price_per_unit">{{ tender.bidding_price_per_unit }}</td>
-        <td data-field="budget_price_per_unit">{{ tender.budget_price_per_unit }}</td>
-        <td data-field="overall_profit">{{ tender.overall_profit }}</td>
-        <td data-field="overall_purchase_amount">{{ tender.overall_purchase_amount }}</td>
-        <td data-field="overall_contract_amount">{{ tender.overall_contract_amount }}</td>
-        <td data-field="winning_price">{{ tender.winning_price }}</td>
-        <td data-field="commercial_offer_text">{{ tender.commercial_offer_text }}</td>
-        <td data-field="status">{{ tender.status }}</td>
-        <td>
-            <button class="btn btn-sm btn-primary edit-tender">Редактировать</button>
-            <button class="btn btn-sm btn-success save-tender" style="display: none;">Сохранить</button>
-        </td>
+        <!--Модальное окно с подробной информацией о тендере-->
+        {% include 'partial/tender_details_modal.html' %}
     </tr>
-    {% endfor %}
     </tbody>
+    {% endfor %}
 </table>
-<div class="modal modal-dialog-scrollable" id="myModal" style="height: 100%">
-    <div class="modal-dialog">
-        <div class="modal-content" style="padding: 30px">
-            <span class="close"></span>
-            <div><b>
-                Лот:
-            </b>
-                <p id="modal-lot"></p>
-            </div>
-            <div><b>Учреждение: </b><p id="modal-company"></p></div>
-            <div><b>Наименование: </b><p id="modal-name"></p></div>
-            <div><b>Цена за единицу: </b><p id="modal-price_per_unit"></p></div>
-            <div><b>Количество: </b><p id="modal-quantity"></p></div>
-            <div><b>Плановая сумма: </b><p id="modal-planned_amount"></p></div>
-            <div><b>Срок поставки: </b><p id="modal-delivery_deadline"></p></div>
-            <div><b>Наименование предлагаемого товара: </b><p id="modal-proposed_product_name"></p></div>
-            <div><b>Поставщик: </b><p id="modal-supplier"></p></div>
-            <div><b>Цена без скидки : </b><p id="modal-price_without_discount"></p></div>
-            <div><b>Скидка от поставщика : </b><p id="modal-supplier_discount"></p></div>
-            <div><b>Цена со скидкой : </b><p id="modal-price_with_discount"></p></div>
-            <div><b>НДС : </b><p id="modal-vat"></p></div>
-            <div><b>Примечание : </b><p id="modal-note"></p></div>
-            <div><b>Менеджер : </b><p id="modal-manager"></p></div>
-            <div><b>Цена закупа : </b><p id="modal-purchase_price"></p></div>
-            <div><b>Дата : </b><p id="modal-date"></p></div>
-            <div><b>Крайний срок : </b><p id="modal-deadline"></p></div>
-            <div><b>Вид закупа : </b><p id="modal-procurement_type"></p></div>
-            <div><b>Ссылка на бумажное объявление : </b>
-                <a href="https://okbkar.kz/ru/gosudarstvennye-zakupki/631-tender-ot-22-12-2022.html"
-               style="text-decoration: none">
-                <p id="modal-paper_ad_link"></p>
-            </a></div>
-            <div><b>Коэффицент доставки : </b><p id="modal-profit_rate"></p></div>
-            <div><b>Коэффицент прибыли : </b><p id="modal-delivery_rate"></p></div>
-            <div><b>Цена закупа за ед. : </b><p id="modal-purchase_price_per_unit"></p></div>
-            <div><b>Цена подачи за ед. : </b><p id="modal-bidding_price_per_unit"></p></div>
-            <div><b>Цена бюджета за ед. : </b><p id="modal-budget_price_per_unit"></p></div>
-            <div><b>Общая прибыль проекта : </b><p id="modal-overall_profit"></p></div>
-            <div><b>Общая сумма закупа : </b><p id="modal-overall_purchase_amount"></p></div>
-            <div><b>Общая сумма договора : </b><p id="modal-overall_contract_amount"></p></div>
-            <div><b>Выигрышная цена : </b><p id="modal-winning_price"></p></div>
-            <div><b>Статус Объявления : </b><p id="modal-status"></p></div>
-            <button class="btn btn-sm btn-primary edit-tender">Редактировать</button>
-            <button class="btn btn-sm btn-success save-tender" style="display: none;">Сохранить</button>
-        </div>
-    </div>
-</div>
-<script src="static/js/modal.js"></script>
+
 {% else %}
-<p>Объявления не добавлены</p>
+<p class="no_tenders mt-3">Объявления не добавлены</p>
+{% endif %}
+{% if is_paginated %}
+{% include 'partial/pagination.html' %}
 {% endif %}
 {% endblock %}
-
