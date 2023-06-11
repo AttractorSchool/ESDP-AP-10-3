@@ -24,7 +24,14 @@
             <div><b>Срок поставки: </b>
                 <p id="modal-supply_date_ru"></p></div>
             <div><b>Наименование предлагаемого товара: </b>
-                <p id="modal-products"></p></div>
+                <!--                <p id="modal-products"></p>-->
+                <div data-field="proposed_product_name" class="modal-provider-name">
+                    <button class="btn btn-primary"
+                            onclick="window.open('{% url 'similar_products' tender.id %}','popup','width=600,height=600'); return false;">
+                        Подобрать
+                    </button>
+                </div>
+            </div>
             <div><b>Поставщик: </b>
                 <p id="modal-suppliers"></p></div>
             <div><b>Цена без скидки : </b>

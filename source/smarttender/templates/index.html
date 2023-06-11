@@ -91,19 +91,14 @@
         <td class="tender-cell">{{ tender.lot.plans.ref_units.name_ru }}</td>
         <td class="tender-cell">KZT {{ tender.lot.plans.amount }}</td>
         <td class="tender-cell">{{ tender.lot.plans.supply_date_ru }}</td>
-        <td data-field="lot" class="modal-trigger text-center" data-cell-id="{{ tender.id }}" data-lot="{{ tender.lot }}">
+        <td data-field="lot" class="modal-trigger text-center" data-cell-id="{{ tender.id }}"
+            data-lot="{{ tender.lot }}">
             <button class="btn btn-secondary">
                 Подробнее
             </button>
         </td>
         <!--Модальное окно с подробной информацией о тендере-->
         {% include 'partial/tender_details_modal.html' %}
-        <td data-field="proposed_product_name" class="modal-provider-name">
-            <button class="btn btn-primary"
-                    onclick="window.open('{% url 'similar_products' tender.id %}','popup','width=600,height=600'); return false;">
-                Подобрать
-            </button>
-        </td>
     </tr>
     </tbody>
     {% endfor %}
