@@ -49,14 +49,13 @@
     text-align: center;
     border: solid 1px gray;
 }
-
-.modal-content {
+.tender_details_modal {
   display: none;
   position: fixed;
   z-index: 999;
   top: 50%;
-  left: 50%;
-  transform: translate(51%, -3%);
+  left: 80%;
+  transform: translate(50%, 0);
   width: 100%;
   max-width: 507px;
   overflow-y: auto;
@@ -64,7 +63,6 @@
   padding: 20px;
   box-sizing: border-box;
 }
-
 .close {
   position: absolute;
   top: 10px;
@@ -74,14 +72,12 @@
   font-weight: bold;
   cursor: pointer;
 }
-
 .close:hover,
 .close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
-
 b {
   margin-right: 5px;
   float: left;
