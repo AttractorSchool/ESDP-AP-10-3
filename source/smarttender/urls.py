@@ -1,6 +1,7 @@
 from django.urls import path
 
-from smarttender.views import ProductListView, update_tender, get_cell_data, EnsTruListView
+from smarttender.views import ProductListView, update_tender, get_cell_data
+from smarttender.views.enstru_codes import EnsTruListView
 from smarttender.views.mnn_products import find_similar_products, similar_products, selected_product
 from smarttender.views.tenders import TenderListView, tender_graphql_view, tender_save_view
 
