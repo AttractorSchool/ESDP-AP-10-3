@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from configparser import ConfigParser
 from pathlib import Path
 
 import environ
@@ -145,3 +146,9 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+config = ConfigParser()
+config.read('app/config.ini')
+
+GRAPHQL_URL = config.get('GRAPHQL', 'GRAPHQL_URL')
+AUTH_TOKEN = config.get('GRAPHQL', 'AUTH_TOKEN')
