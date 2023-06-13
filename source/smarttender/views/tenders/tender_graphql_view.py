@@ -1,10 +1,17 @@
 import json
+from configparser import ConfigParser
 
 import requests
 import urllib3
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+
+config = ConfigParser()
+config.read('config.ini')
+
+GRAPHQL_URL = config.get('GRAPHQL', 'GRAPHQL_URL')
+AUTH_TOKEN = config.get('GRAPHQL', 'AUTH_TOKEN')
 
 
 @csrf_exempt
