@@ -26,7 +26,7 @@
     margin: 3px;
 }
 .pagination a {
-    background: gray;
+    background: #6c757d;
     color: white;
     text-decoration: none;
 }
@@ -35,8 +35,8 @@
     color: black;
 }
 .pagination .page-disabled {
-    background: gray;
-    color: #dddddd
+    background: darkgray;
+    color: white;
 }
 .pagination .current-page {
     display: inline-block;

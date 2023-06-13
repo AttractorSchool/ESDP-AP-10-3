@@ -29,7 +29,7 @@
 </div>
 
 <!--Поиск по коду ЕНС ТРУ. Если значение пустое, то загружает все объявления-->
-<div class="d-flex tenders_search mt-3" id="searchForm">
+<div class="d-flex tenders_search mt-3 pb-5" id="searchForm">
     <input class="form-control me-2" type="search" placeholder="Введите код ЕНС ТРУ" aria-label="Search"
            style="width: 280px;" name="search_value" id="searchValueInput">
     <button type="button" class="btn btn-outline-dark me-3" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -60,7 +60,7 @@
 {% if tenders %}
 
 <!--Вывод объявлений из БД-->
-<table class="table table-bordered table-hover mt-5" id="tenderTable">
+<table class="table table-bordered table-hover mt-3" id="tenderTable">
     <thead class="table-primary">
     <tr>
         <th scope="col">№ лота</th>
