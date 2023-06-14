@@ -10,7 +10,7 @@ from smarttender.utils import send_graphql_request, filter_graphql_tenders, pars
 
 GRAPHQL_QUERY = '''
     {
-        Lots {
+        Lots(limit: 200) {
             lotNumber
             customerNameRu
             nameRu

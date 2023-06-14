@@ -23,6 +23,9 @@ function fetchData() {
     .then(function (data) {
       console.log(data);
 
+      var tenderCount = data.tenders.length;
+      var tenderCountElement = document.getElementById('tenderCount');
+      tenderCountElement.textContent = 'Количество объявлений: ' + tenderCount;
       var tableHead = document.getElementById('tenderTableHead');
       tableHead.innerHTML = '';
 

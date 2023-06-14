@@ -43,6 +43,8 @@
     </button>
     <!--Модальное окно с кодами ЕНС ТРУ-->
     {% include 'partial/enstru_codes_modal.html' %}
+    <!-- Форма добавления данных -->
+    {% include 'partial/enstru_code_create.html' %}
 </div>
 
 {% if messages %}
@@ -58,6 +60,7 @@
 {% include 'partial/pagination.html' %}
 {% endif %}
 {% if tenders %}
+<p>Количество объявлений: {{ tenders|length }}</p>
 
 <!--Вывод объявлений из БД-->
 <table class="table table-bordered table-hover mt-3" id="tenderTable">

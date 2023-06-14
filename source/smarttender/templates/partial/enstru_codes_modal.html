@@ -1,5 +1,5 @@
 <div class="modal fade" id="exampleModalEnsTru" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabelEnsTru">Коды ЕНС ТРУ</h5>
@@ -7,10 +7,30 @@
             </div>
             <div class="modal-body">
                 <div class="modal-button text-end">
-                    <button type="button" class="btn btn-primary" id="addEnsTruCodeButton">Добавить</button>
+
+                    <!--Загрузка Excel файла-->
+                    <form id="upload-form" method="post" enctype="multipart/form-data" class="row g-3">
+                        {% csrf_token %}
+                        <div class="col-auto">
+                            <input class="form-control" type="file" name="enstru_excel_file" id="excel-file-input">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-outline-dark mb-3" id="upload-button">Загрузить из
+                                файла
+                            </button>
+                        </div>
+                    </form>
+
+                    <!--Процесс загрузки-->
+                    <div id="progress-container" style="display: none;">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" id="progress-bar"
+                                 role="progressbar"
+                                 style="width: 0%"></div>
+                        </div>
+                        <div id="progress-status"></div>
+                    </div>
                 </div>
-                <!-- Форма добавления данных -->
-                {% include 'partial/enstru_code_create.html' %}
                 <table class="table table-bordered table-hover mt-3" id="EnsTruTableModal">
                     <thead class="table-primary" id="EnsTruTableHead">
                     <!--                        Сюда добавляются заголовки столбцов-->
@@ -22,6 +42,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button class="btn btn-primary" data-bs-target="#addEnsTruCodeModal" data-bs-toggle="modal">
+                    Добавить
+                </button>
             </div>
         </div>
     </div>
