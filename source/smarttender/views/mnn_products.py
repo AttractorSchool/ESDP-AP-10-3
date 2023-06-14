@@ -1,34 +1,23 @@
+from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from smarttender.models import Tender, Product
 
 
-def find_similar_products(request, tender_id):
-    tender = Tender.objects.get(id=tender_id)
-    similar_products = Product.objects.filter(trade_name__icontains=tender.lot.name_ru)
-    product_list = []
-    for product in similar_products:
-        product_data = {
-            'trade_name': product.trade_name,
-            'producer': product.producer,
-            'country': product.country,
-            'register_date': product.register_date,
-        }
-        product_list.append(product_data)
-    data = {
-        'tender_id': tender.id,
-        'similar_products': product_list,
-    }
-    return JsonResponse(data)
-
-
 def similar_products(request, tender_id):
-    tender = Tender.objects.get(id=tender_id)
-    similar_products = Product.objects.filter(trade_name__icontains=tender.lot.name_ru)
+    tender = get_object_or_404(Tender, id=tender_id)
+    name_ru_parts = tender.lot.name_ru.split(",")
+    query = Q()
+    for part in name_ru_parts:
+        query |= Q(trade_name__icontains=part.strip()) | Q(ign__icontains=part.strip())
+
+    similar_products = Product.objects.filter(query)
+    print(similar_products)
     product_list = []
     for product in similar_products:
         product_data = {
+            'id': product.id,
             'trade_name': product.trade_name,
             'producer': product.producer,
             'country': product.country,
@@ -38,7 +27,6 @@ def similar_products(request, tender_id):
 
     selected_product_key = f'selected_product_{tender_id}'
     selected_product = request.session.get(selected_product_key)
-
     context = {
         'tender': tender,
         'product_list': product_list,
@@ -49,10 +37,22 @@ def similar_products(request, tender_id):
 
 def selected_product(request):
     if request.method == 'POST':
-        selected_product = request.POST.get('selected_product')
+        product_id = request.POST.get('selected_product')
         tender_id = request.POST.get('tender_id')
+
+        product = get_object_or_404(Product, id=product_id)
+
         selected_product_key = f'selected_product_{tender_id}'
+        selected_product = {
+            'id': product.id,
+            'trade_name': product.trade_name,
+            'producer': product.producer,
+            'country': product.country,
+            'register_date': product.register_date.strftime('%Y-%m-%d'),
+        }
+
         request.session[selected_product_key] = selected_product
         return redirect('similar_products', tender_id=tender_id)
     else:
         return JsonResponse({'error': 'Invalid request method.'})
+
