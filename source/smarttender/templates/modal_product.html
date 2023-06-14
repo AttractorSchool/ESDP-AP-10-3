@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Подходящие товары по МНН для: {{ tender.lot.name_ru }}</h1>
-    {% if selected_product%}
+    {% if selected_product %}
     <h2>Выбранный товар:</h2>
         <p>Торговое наименование: {{ selected_product.trade_name }}</p>
         <p>Производитель: {{ selected_product.producer }}</p>
@@ -32,13 +32,16 @@
                     <td>{{ product.producer }}</td>
                     <td>{{ product.country }}</td>
                     <td>{{ product.register_date }}</td>
-                    <td><input type="radio" name="selected_product" value="{{ product.id }}"
-                               {% if selected_product and selected_product.id == product.id %}checked{% endif %}></td>
+                    <td>
+                        <input type="radio" name="selected_product" value="{{ product.id }}"
+                               {% if selected_product and selected_product.id == product.id %}checked{% endif %}>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <button type="submit">Выбрать</button>
+        <button type="submit" name="action" value="choose">Выбрать</button>
+        <button type="submit" name="action" value="save">Сохранить</button>
     </form>
 </body>
 </html>
