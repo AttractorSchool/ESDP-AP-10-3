@@ -11,10 +11,10 @@ function saveSelectedTenders() {
       customerNameRu: tenderRow.querySelector('.customer-name-ru').textContent,
       nameRu: tenderRow.querySelector('.name-ru').textContent,
       descriptionRu: tenderRow.querySelector('.description-ru').textContent,
-      price: tenderRow.querySelector('.price').textContent,
+      price: tenderRow.querySelector('.price').textContent.replace('KZT ', ''),
       count: tenderRow.querySelector('.count').textContent,
       refUnit: tenderRow.querySelector('.ref-unit').textContent,
-      amount: tenderRow.querySelector('.amount').textContent,
+      amount: tenderRow.querySelector('.amount').textContent.replace('KZT ', ''),
       supplyDateRu: tenderRow.querySelector('.supply-date-ru').textContent
     };
 
