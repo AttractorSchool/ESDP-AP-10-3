@@ -49,7 +49,7 @@ def selected_product(request):
             'trade_name': product.trade_name,
             'producer': product.producer,
             'country': product.country,
-            'register_date': product.register_date.strftime('%Y-%m-%d'),
+            'register_date': product.register_date.strftime('%Y-%m-%d') if product.register_date else 'Нет данных',
         }
 
         if action == 'choose':
