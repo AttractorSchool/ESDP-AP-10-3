@@ -35,8 +35,8 @@
     color: black;
 }
 .pagination .page-disabled {
-    background: darkgray;
-    color: white;
+    background: DimGray;
+    color: silver;
 }
 .pagination .current-page {
     display: inline-block;
