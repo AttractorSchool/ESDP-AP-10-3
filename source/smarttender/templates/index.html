@@ -58,6 +58,7 @@
 {% include 'partial/pagination.html' %}
 {% endif %}
 {% if tenders %}
+<p>Количество объявлений: {{ tenders|length }}</p>
 
 <!--Вывод объявлений из БД-->
 <table class="table table-bordered table-hover mt-3" id="tenderTable">
