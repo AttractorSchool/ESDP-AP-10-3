@@ -6,7 +6,7 @@ from django.views.generic import ListView
 
 from smarttender.forms import SearchForm
 from smarttender.models import Tender
-from smarttender.utils import parse_excel_file
+from smarttender.utils import parse_excel_file, parse_enstru_excel_file
 
 
 class TenderListView(LoginRequiredMixin, ListView):
@@ -50,6 +50,10 @@ class TenderListView(LoginRequiredMixin, ListView):
         if request.FILES and 'excel_file' in request.FILES:
             excel_file = request.FILES['excel_file']
             parse_excel_file(excel_file)
+            messages.success(request, 'Файл успешно загружен!')
+        elif request.FILES and 'enstru_excel_file' in request.FILES:
+            enstru_excel_file = request.FILES['enstru_excel_file']
+            parse_enstru_excel_file(enstru_excel_file)
             messages.success(request, 'Файл успешно загружен!')
         else:
             messages.error(request, 'Ошибка загрузки файла!')

@@ -18,3 +18,6 @@ class EnsTruCode(models.Model):
         auto_now=True,
         verbose_name="Дата и время изменения"
     )
+
+    def __str__(self):
+        return self.code
