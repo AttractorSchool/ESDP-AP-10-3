@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from smarttender.models import Tender, Product
+from smarttender.models import Tender, Product, Lot
 
 
 def similar_products(request, tender_id):
@@ -39,6 +39,7 @@ def selected_product(request):
     if request.method == 'POST':
         product_id = request.POST.get('selected_product')
         tender_id = request.POST.get('tender_id')
+        action = request.POST.get('action')
 
         product = get_object_or_404(Product, id=product_id)
 
@@ -51,8 +52,15 @@ def selected_product(request):
             'register_date': product.register_date.strftime('%Y-%m-%d'),
         }
 
-        request.session[selected_product_key] = selected_product
-        return redirect('similar_products', tender_id=tender_id)
+        if action == 'choose':
+            request.session[selected_product_key] = selected_product
+            return redirect('similar_products', tender_id=tender_id)
+        elif action == 'save':
+            lot = get_object_or_404(Lot, id=tender_id)
+            lot.products = product
+            lot.save()
+
+            return render(request, 'close_window.html')
+
     else:
         return JsonResponse({'error': 'Invalid request method.'})
-
