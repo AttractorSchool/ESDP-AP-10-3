@@ -1,9 +1,3 @@
-// Обработчик клика по кнопке "Добавить"
-document.getElementById('addEnsTruCodeButton').addEventListener('click', function () {
-    // Открытие модального окна с формой добавления данных
-    $('#addEnsTruCodeModal').modal('show');
-});
-
 // Обработчик клика по кнопке "Сохранить"
 document.getElementById('saveEnsTruCodeButton').addEventListener('click', function () {
     // Получение данных из формы
@@ -38,6 +32,8 @@ document.getElementById('saveEnsTruCodeButton').addEventListener('click', functi
 
             document.getElementById('ensTruCodeInput').value = '';
             document.getElementById('ensTruNameInput').value = '';
+
+            document.getElementById('loadEnsTruCodesBtn').click();
         }
     })
     .catch(function (error) {
