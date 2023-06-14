@@ -8,6 +8,7 @@ def get_cell_data(request):
     cell_id = request.GET.get('cell_id')
     tender = get_object_or_404(Tender, id=cell_id)
     data = {
+        'tender_id': tender.id,
         'lot_number': tender.lot.lot_number if tender.lot else None,
         'customer_name_ru': tender.lot.customer_name_ru if tender.lot else None,
         'name_ru': tender.lot.name_ru if tender.lot else None,

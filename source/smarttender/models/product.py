@@ -58,7 +58,7 @@ class Product(models.Model):
         null=True,
         blank=True
     )
-    IGN = models.CharField(
+    ign = models.CharField(
         max_length=255,
         null=True,
         blank=True,

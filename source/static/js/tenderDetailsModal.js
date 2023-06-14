@@ -9,6 +9,7 @@
                 'cell_id': cellId
             },
             success: function (data) {
+                $('#modal-tender_id').text(data.tender_id);
                 $('#modal-lot_number').text(data.lot_number);
                 $('#modal-customer_name_ru').text(data.customer_name_ru);
                 $('#modal-name_ru').text(data.name_ru);
