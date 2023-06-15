@@ -94,6 +94,8 @@ class TrdBuy(models.Model):
         verbose_name='Финансовый год'
     )
     ref_trade_methods = models.ForeignKey(
+        null=True,
+        blank=True,
         to='smarttender.RefTradeMethod',
         on_delete=models.CASCADE
     )
