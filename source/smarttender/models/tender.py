@@ -3,12 +3,14 @@ from django.db.models import TextChoices
 from django.utils import timezone
 
 
+# Статусы тендеров
 class StatusChoice(TextChoices):
     NEW = 'NEW', 'Новый'
     IN_PROGRESS = 'IN_PROGRESS', 'В процессе'
     DONE = 'DONE', 'Завершён'
 
 
+# Тендер
 class Tender(models.Model):
     trd_buy = models.ForeignKey(
         null=True,

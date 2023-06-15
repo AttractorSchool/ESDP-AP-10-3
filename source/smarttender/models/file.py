@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
+# Документ закупки
 class File(models.Model):
     original_name = models.CharField(
         max_length=255,

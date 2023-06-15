@@ -3,7 +3,10 @@ from .file import File
 from .lot import Lot
 from .plan import Plan
 from .product import Product
+from .ref_buy_status import RefBuyStatus
+from .ref_subject_type import RefSubjectType
 from .ref_trade_method import RefTradeMethod
+from .ref_type_trade import RefTypeTrade
 from .ref_unit import RefUnit
 from .supplier import Supplier
 from .tender import Tender

@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
+# Лот объявления
 class Lot(models.Model):
     lot_number = models.CharField(
         max_length=255,

@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
+# Объявление
 class TrdBuy(models.Model):
     number_anno = models.CharField(
         max_length=255,

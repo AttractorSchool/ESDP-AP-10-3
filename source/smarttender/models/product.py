@@ -1,6 +1,8 @@
 from django.db import models
+from django.utils import timezone
 
 
+# Товар
 class Product(models.Model):
     number = models.IntegerField(
         verbose_name='Номер',
@@ -128,12 +130,27 @@ class Product(models.Model):
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата и время создания"
+        verbose_name='Дата и время создания'
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name="Дата и время изменения"
+        verbose_name='Дата и время изменения'
+    )
+    is_deleted = models.BooleanField(
+        null=False,
+        default=False,
+        verbose_name='Удалён'
+    )
+    deleted_at = models.DateTimeField(
+        null=True,
+        default=None,
+        verbose_name='Дата и время удаления'
     )
 
     def __str__(self):
         return self.trade_name
+
+    def delete(self, using=None, keep_parents=False):
+        self.is_deleted = True
+        self.deleted_at = timezone.now()
+        self.save()

@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
+# Тип закупки (первая, повторная)
 class RefTypeTrade(models.Model):
     name_kz = models.CharField(
         max_length=255,

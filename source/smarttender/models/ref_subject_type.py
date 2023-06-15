@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
+# Вид предмета закупки
 class RefSubjectType(models.Model):
     name_kz = models.CharField(
         max_length=255,
