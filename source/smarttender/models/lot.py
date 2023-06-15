@@ -63,31 +63,13 @@ class Lot(models.Model):
         on_delete=models.CASCADE,
         related_name='lots'
     )
-    plans = models.ForeignKey(
-        null=True,
+    products = models.ManyToManyField(
         blank=True,
-        to='smarttender.Plan',
-        on_delete=models.CASCADE,
-        related_name='lot'
+        to='smarttender.Product'
     )
-    files = models.ForeignKey(
-        null=True,
+    suppliers = models.ManyToManyField(
         blank=True,
-        to='smarttender.File',
-        on_delete=models.CASCADE,
-        related_name='lot'
-    )
-    products = models.ForeignKey(
-        null=True,
-        blank=True,
-        to='smarttender.Product',
-        on_delete=models.CASCADE
-    )
-    suppliers = models.ForeignKey(
-        null=True,
-        blank=True,
-        to='smarttender.Supplier',
-        on_delete=models.CASCADE
+        to='smarttender.Supplier'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

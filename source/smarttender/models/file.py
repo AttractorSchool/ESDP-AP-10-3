@@ -28,8 +28,10 @@ class File(models.Model):
         blank=True,
         verbose_name='Путь до файла'
     )
-    trd_buy = models.ForeignKey(
-        to='smarttender.TrdBuy',
+    lot = models.ForeignKey(
+        null=True,
+        blank=True,
+        to='smarttender.Lot',
         on_delete=models.CASCADE,
         related_name='files'
     )

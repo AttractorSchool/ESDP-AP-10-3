@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Lot, Tender
+from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Lot
 
 
 @csrf_exempt
@@ -45,7 +45,7 @@ def tender_save_view(request):
                         plans=plan,
                         trd_buy=trd_buy
                     )
-                    tender = Tender.objects.create(
+                    tender = TrdBuy.objects.create(
                         lot=lot
                     )
 

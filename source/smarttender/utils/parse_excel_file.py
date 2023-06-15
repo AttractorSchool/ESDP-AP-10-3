@@ -2,7 +2,7 @@ import math
 
 import pandas as pd
 
-from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Product, Supplier, Lot, Tender
+from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Product, Supplier, Lot
 
 
 def parse_excel_file(excel_file):
