@@ -75,13 +75,13 @@ class TrdBuy(models.Model):
         max_length=100,
         null=True,
         blank=True,
-        verbose_name="Дата"
+        verbose_name='Дата и время публикации'
     )
     end_date = models.CharField(
         max_length=100,
         null=True,
         blank=True,
-        verbose_name="Крайний срок"
+        verbose_name="Дата окончания приема заявок"
     )
     itogi_date_public = models.DateField(
         null=True,
@@ -94,16 +94,16 @@ class TrdBuy(models.Model):
         verbose_name='Финансовый год'
     )
     ref_trade_methods = models.ForeignKey(
-        to="smarttender.RefTradeMethod",
+        to='smarttender.RefTradeMethod',
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата и время создания"
+        verbose_name='Дата и время создания'
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name="Дата и время изменения"
+        verbose_name='Дата и время изменения'
     )
     is_deleted = models.BooleanField(
         null=False,

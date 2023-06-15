@@ -7,21 +7,21 @@ class RefUnit(models.Model):
         max_length=255,
         null=True,
         blank=True,
-        verbose_name="Единица измерения на государственном языке"
+        verbose_name='Единица измерения на государственном языке'
     )
     name_ru = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name="Единица измерения на русском языке"
+        verbose_name='Единица измерения на русском языке'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата и время создания"
+        verbose_name='Дата и время создания'
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name="Дата и время изменения"
+        verbose_name='Дата и время изменения'
     )
     is_deleted = models.BooleanField(
         null=False,

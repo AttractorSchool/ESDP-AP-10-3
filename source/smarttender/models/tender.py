@@ -13,7 +13,7 @@ class Tender(models.Model):
     trd_buy = models.ForeignKey(
         null=True,
         blank=True,
-        to="smarttender.TrdBuy",
+        to='smarttender.TrdBuy',
         on_delete=models.CASCADE
     )
     supplier_discount = models.CharField(
@@ -127,11 +127,11 @@ class Tender(models.Model):
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата и время создания"
+        verbose_name='Дата и время создания'
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name="Дата и время изменения"
+        verbose_name='Дата и время изменения'
     )
     is_deleted = models.BooleanField(
         null=False,

@@ -7,7 +7,7 @@ class Lot(models.Model):
         max_length=255,
         null=True,
         blank=True,
-        verbose_name="Номер лота"
+        verbose_name='Номер лота'
     )
     count = models.CharField(
         max_length=100,
@@ -79,22 +79,22 @@ class Lot(models.Model):
     products = models.ForeignKey(
         null=True,
         blank=True,
-        to="smarttender.Product",
+        to='smarttender.Product',
         on_delete=models.CASCADE
     )
     suppliers = models.ForeignKey(
         null=True,
         blank=True,
-        to="smarttender.Supplier",
+        to='smarttender.Supplier',
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата и время создания"
+        verbose_name='Дата и время создания'
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name="Дата и время изменения"
+        verbose_name='Дата и время изменения'
     )
     is_deleted = models.BooleanField(
         null=False,

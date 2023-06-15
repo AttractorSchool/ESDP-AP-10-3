@@ -31,25 +31,25 @@ class Plan(models.Model):
         max_length=100,
         null=True,
         blank=True,
-        verbose_name="Количество / объем"
+        verbose_name='Количество / объем'
     )
     price = models.CharField(
         max_length=100,
         null=True,
         blank=True,
-        verbose_name="Цена за единицу"
+        verbose_name='Цена за единицу'
     )
     amount = models.CharField(
         max_length=100,
         null=True,
         blank=True,
-        verbose_name="Общая сумма, утвержденная для закупки"
+        verbose_name='Общая сумма, утвержденная для закупки'
     )
     ref_enstru_code = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name="Код КТРУ (ЕНС ТРУ)"
+        verbose_name='Код КТРУ (ЕНС ТРУ)'
     )
     desc_kz = models.TextField(
         null=True,
@@ -82,11 +82,11 @@ class Plan(models.Model):
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата и время создания"
+        verbose_name='Дата и время создания'
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name="Дата и время изменения"
+        verbose_name='Дата и время изменения'
     )
     is_deleted = models.BooleanField(
         null=False,
