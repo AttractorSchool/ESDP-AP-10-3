@@ -118,6 +118,12 @@ class TrdBuy(models.Model):
         to='smarttender.RefTypeTrade',
         on_delete=models.CASCADE
     )
+    calculation = models.ForeignKey(
+        null=True,
+        blank=True,
+        to='smarttender.Calculation',
+        on_delete=models.CASCADE
+    )
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Дата и время создания'
