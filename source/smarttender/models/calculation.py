@@ -1,17 +1,9 @@
 from django.db import models
-from django.db.models import TextChoices
 from django.utils import timezone
 
 
-# Статусы тендеров
-class StatusChoice(TextChoices):
-    NEW = 'NEW', 'Новый'
-    IN_PROGRESS = 'IN_PROGRESS', 'В процессе'
-    DONE = 'DONE', 'Завершён'
-
-
-# Тендер
-class Tender(models.Model):
+# Расчёты
+class Calculation(models.Model):
     trd_buy = models.ForeignKey(
         null=True,
         blank=True,
@@ -120,12 +112,6 @@ class Tender(models.Model):
         null=True,
         blank=True,
         verbose_name='Текст для КП'
-    )
-    status = models.CharField(
-        max_length=30,
-        choices=StatusChoice.choices,
-        default=StatusChoice.NEW,
-        verbose_name='Статус'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

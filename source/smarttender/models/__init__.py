@@ -1,3 +1,4 @@
+from .calculation import Calculation
 from .enstru import EnsTruCode
 from .file import File
 from .lot import Lot
@@ -9,5 +10,4 @@ from .ref_trade_method import RefTradeMethod
 from .ref_type_trade import RefTypeTrade
 from .ref_unit import RefUnit
 from .supplier import Supplier
-from .tender import Tender
 from .trd_buy import TrdBuy
