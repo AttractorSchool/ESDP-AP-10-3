@@ -100,6 +100,24 @@ class TrdBuy(models.Model):
         to='smarttender.RefTradeMethod',
         on_delete=models.CASCADE
     )
+    ref_subject_type = models.ForeignKey(
+        null=True,
+        blank=True,
+        to='smarttender.RefSubjectType',
+        on_delete=models.CASCADE
+    )
+    ref_buy_status = models.ForeignKey(
+        null=True,
+        blank=True,
+        to='smarttender.RefBuyStatus',
+        on_delete=models.CASCADE
+    )
+    ref_type_trade = models.ForeignKey(
+        null=True,
+        blank=True,
+        to='smarttender.RefTypeTrade',
+        on_delete=models.CASCADE
+    )
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Дата и время создания'
