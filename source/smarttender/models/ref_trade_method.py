@@ -7,13 +7,13 @@ class RefTradeMethod(models.Model):
         max_length=255,
         null=True,
         blank=True,
-        verbose_name='Вид закупа на государственном языке'
+        verbose_name='Способ закупки на государственном языке'
     )
     name_ru = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name='Вид закупа на русском языке'
+        verbose_name='Способ закупки на русском языке'
     )
     code = models.CharField(
         max_length=255,
