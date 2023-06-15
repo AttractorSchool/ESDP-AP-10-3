@@ -6,8 +6,9 @@ class EnsTruCode(models.Model):
         max_length=100,
         verbose_name='Код ЕНС ТРУ'
     )
-    name = models.CharField(
-        max_length=255,
+    name = models.TextField(
+        null=True,
+        blank=True,
         verbose_name='Наименование'
     )
     created_at = models.DateTimeField(

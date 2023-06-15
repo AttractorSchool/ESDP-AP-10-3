@@ -10,7 +10,7 @@ def parse_enstru_excel_file(enstru_excel_file):
     empty_row_count = 0
 
     for index, row in df.iterrows():
-        if pd.isnull(row[1]) and pd.isnull(row[2]) and pd.isnull(row[3]):
+        if pd.isnull(row[0]) and pd.isnull(row[1]) and pd.isnull(row[3]):
             empty_row_count += 1
         else:
             empty_row_count = 0
