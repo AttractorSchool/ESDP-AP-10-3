@@ -96,7 +96,6 @@ class Lot(models.Model):
         auto_now=True,
         verbose_name="Дата и время изменения"
     )
-
     is_deleted = models.BooleanField(
         null=False,
         default=False,
