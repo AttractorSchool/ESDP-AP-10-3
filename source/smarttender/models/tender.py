@@ -10,10 +10,10 @@ class StatusChoice(TextChoices):
 
 
 class Tender(models.Model):
-    lot = models.ForeignKey(
+    trd_buy = models.ForeignKey(
         null=True,
         blank=True,
-        to="smarttender.Lot",
+        to="smarttender.TrdBuy",
         on_delete=models.CASCADE
     )
     supplier_discount = models.CharField(
@@ -145,7 +145,7 @@ class Tender(models.Model):
     )
 
     def __str__(self):
-        return self.lot
+        return self.trd_buy
 
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True
