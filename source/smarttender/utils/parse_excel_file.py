@@ -2,7 +2,7 @@ import math
 
 import pandas as pd
 
-from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Product, Supplier, Lot
+from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Product, Supplier, Lot, Calculation
 
 
 def parse_excel_file(excel_file):
@@ -36,10 +36,10 @@ def parse_excel_file(excel_file):
         # overall_contract_amount = parse_float(row[30])
         # winning_price = parse_float(row[31])
 
-        trade_method = RefTradeMethod.objects.create(
+        trade_method, _ = RefTradeMethod.objects.get_or_create(
             name_ru=row[20]
         )
-        unit_measure = RefUnit.objects.create(
+        unit_measure, _ = RefUnit.objects.get_or_create(
             name_ru=row[7]
         )
         trd_buy = TrdBuy.objects.create(
@@ -54,24 +54,26 @@ def parse_excel_file(excel_file):
             amount=row[8],
             supply_date_ru=row[9]
         )
-        product = Product.objects.create(
+        product, _ = Product.objects.get_or_create(
             trade_name=row[10]
         )
-        supplier = Supplier.objects.create(
+        supplier, _ = Supplier.objects.get_or_create(
             name=row[11]
         )
         lot = Lot.objects.create(
             lot_number=row[1],
             customer_name_ru=row[2],
             name_ru=row[3],
-            description_ru=row[4],
-            plans=plan,
-            trd_buy=trd_buy,
-            products=product,
-            suppliers=supplier
+            description_ru=row[4]
         )
-        tender = Tender.objects.create(
-            lot=lot,
+        lot.plans.set([plan])
+        lot.trd_buy = trd_buy
+        lot.save()
+        lot.products.add(product)
+        lot.suppliers.add(supplier)
+
+        calculation = Calculation.objects.create(
+            trd_buy=trd_buy,
             supplier_discount=row[12],
             vat=row[13],
             note=row[14],

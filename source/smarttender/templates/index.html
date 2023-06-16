@@ -59,8 +59,8 @@
 {% if is_paginated %}
 {% include 'partial/pagination.html' %}
 {% endif %}
-{% if tenders %}
-<p>Количество объявлений: {{ tenders|length }}</p>
+{% if lots %}
+<p>Количество объявлений: {{ lots|length }}</p>
 
 <!--Вывод объявлений из БД-->
 <table class="table table-bordered table-hover mt-3" id="tenderTable">
@@ -78,23 +78,27 @@
         <th scope="col">Подробная информация</th>
     </tr>
     </thead>
-    {% for tender in tenders %}
+    {% for lot in lots %}
     <tbody>
-    <tr class="tender-row" data-tender-id="{{ tender.id }}">
-        <td class="tender-cell">{{ tender.lot.lot_number }}</td>
-        <td class="tender-cell">{{ tender.lot.customer_name_ru }}</td>
-        <td class="tender-cell">{{ tender.lot.name_ru }}</td>
-        <td class="tender-cell">{{ tender.lot.description_ru }}</td>
-        {% if tender.lot.plans.price is not null %}
-        <td class="tender-cell">KZT {{ tender.lot.plans.price }}</td>
+    <tr class="tender-row" data-tender-id="{{ lot.id }}">
+        <td class="tender-cell">{{ lot.lot_number }}</td>
+        <td class="tender-cell">{{ lot.customer_name_ru }}</td>
+        <td class="tender-cell">{{ lot.name_ru }}</td>
+        <td class="tender-cell">{{ lot.description_ru }}</td>
+        {% if lot.plans.price %}
+        <td class="tender-cell">KZT {{ lot.plans.price }}</td>
         {% else %}
-        <td class="tender-cell">{{ tender.lot.plans.price }}</td>
+        <td class="tender-cell">{{ lot.plans.price }}</td>
         {% endif %}
-        <td class="tender-cell">{{ tender.lot.plans.count }}</td>
-        <td class="tender-cell">{{ tender.lot.plans.ref_units.name_ru }}</td>
-        <td class="tender-cell">KZT {{ tender.lot.plans.amount }}</td>
-        <td class="tender-cell">{{ tender.lot.plans.supply_date_ru }}</td>
-        <td data-field="lot" class="modal-trigger text-center" data-cell-id="{{ tender.id }}"
+        <td class="tender-cell">{{ lot.plans.count }}</td>
+        <td class="tender-cell">{{ lot.plans.ref_units.name_ru }}</td>
+        {% if lot.plans.amount %}
+        <td class="tender-cell">KZT {{ lot.plans.amount }}</td>
+        {% else %}
+        <td class="tender-cell">{{ lot.plans.amount }}</td>
+        {% endif %}
+        <td class="tender-cell">{{ lot.plans.supply_date_ru }}</td>
+        <td data-field="lot" class="modal-trigger text-center" data-cell-id="{{ lot.id }}"
             data-lot="{{ tender.lot }}">
             <button class="btn btn-secondary">
                 Подробнее

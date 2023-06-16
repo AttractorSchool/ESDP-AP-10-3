@@ -74,12 +74,9 @@ class Plan(models.Model):
         on_delete=models.CASCADE,
         related_name='plans'
     )
-    ref_units = models.ForeignKey(
-        null=True,
+    ref_units = models.ManyToManyField(
         blank=True,
-        to='smarttender.RefUnit',
-        on_delete=models.CASCADE,
-        related_name='plans'
+        to='smarttender.RefUnit'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

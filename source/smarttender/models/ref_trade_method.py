@@ -28,7 +28,6 @@ class RefTradeMethod(models.Model):
         blank=True,
         verbose_name='Символьный код'
     )
-
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Дата и время создания'

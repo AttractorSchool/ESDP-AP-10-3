@@ -4,6 +4,12 @@ from django.utils import timezone
 
 # Расчёты
 class Calculation(models.Model):
+    trd_buy = models.ForeignKey(
+        null=True,
+        blank=True,
+        to='smarttender.TrdBuy',
+        on_delete=models.CASCADE
+    )
     supplier_discount = models.CharField(
         max_length=100,
         null=True,
