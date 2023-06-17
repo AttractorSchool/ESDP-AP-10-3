@@ -63,14 +63,6 @@ class Lot(models.Model):
         on_delete=models.CASCADE,
         related_name='lots'
     )
-    products = models.ManyToManyField(
-        blank=True,
-        to='smarttender.Product'
-    )
-    suppliers = models.ManyToManyField(
-        blank=True,
-        to='smarttender.Supplier'
-    )
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Дата и время создания'

@@ -2,6 +2,7 @@ from .calculation import Calculation
 from .enstru import EnsTruCode
 from .file import File
 from .lot import Lot
+from .offer import Offer
 from .plan import Plan
 from .product import Product
 from .ref_buy_status import RefBuyStatus
