@@ -5,12 +5,12 @@ from django.utils.http import urlencode
 from django.views.generic import ListView
 
 from smarttender.forms import SearchForm
-from smarttender.models import Tender
+from smarttender.models import TrdBuy
 from smarttender.utils import parse_excel_file, parse_enstru_excel_file
 
 
 class TenderListView(LoginRequiredMixin, ListView):
-    model = Tender
+    model = TrdBuy
     template_name = 'index.html'
     context_object_name = 'tenders'
     paginate_by = 30
@@ -34,7 +34,8 @@ class TenderListView(LoginRequiredMixin, ListView):
         queryset = super().get_queryset().exclude(is_deleted=True)
 
         if self.search_value:
-            query = Q(lot__lot_number__icontains=self.search_value) | Q(lot__name_ru__icontains=self.search_value)
+            query = Q(trd_buy_name_ru__icontains=self.search_value) | Q(
+                trd_buy_lots_lot_number___icontains=self.search_value)
             queryset = queryset.filter(query)
         return queryset
 

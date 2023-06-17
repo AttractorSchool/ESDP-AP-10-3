@@ -2,11 +2,11 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from smarttender.models import Tender, Product, Lot
+from smarttender.models import TrdBuy, Product, Lot
 
 
 def similar_products(request, tender_id):
-    tender = get_object_or_404(Tender, id=tender_id)
+    tender = get_object_or_404(TrdBuy, id=tender_id)
     name_ru_parts = tender.lot.name_ru.split(",")
     query = Q()
     for part in name_ru_parts:

@@ -2,27 +2,19 @@ from django.db import models
 from django.utils import timezone
 
 
-# Единица измерения
-class RefUnit(models.Model):
+# Вид предмета закупки
+class RefSubjectType(models.Model):
     name_kz = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name='Единица измерения на государственном языке'
+        verbose_name='Предмет закупки на государственном языке'
     )
     name_ru = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name='Единица измерения на русском языке'
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Дата и время создания'
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name='Дата и время изменения'
+        verbose_name='Предмет закупки на русском языке'
     )
     is_deleted = models.BooleanField(
         null=False,

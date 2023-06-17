@@ -2,39 +2,25 @@ from django.db import models
 from django.utils import timezone
 
 
-# Способ закупки
-class RefTradeMethod(models.Model):
+# Статус объявления
+class RefBuyStatus(models.Model):
     name_kz = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name='Способ закупки на государственном языке'
+        verbose_name='Статус объявления на государственном языке'
     )
     name_ru = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name='Способ закупки на русском языке'
+        verbose_name='Статус объявления на русском языке'
     )
     code = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name='Цифровой код'
-    )
-    symbolCode = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True,
-        verbose_name='Символьный код'
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Дата и время создания'
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name='Дата и время изменения'
+        verbose_name='Код статуса объявления'
     )
     is_deleted = models.BooleanField(
         null=False,
