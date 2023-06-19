@@ -1,9 +1,18 @@
 import json
-
+import asyncio
+import httpx
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from app.settings import GRAPHQL_URL
 from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Lot
+
+
+async def execute_graphql_query(query, variables):
+    async with httpx.AsyncClient() as client:
+        response = await client.post(GRAPHQL_URL, json={'query': query, 'variables': variables})
+        response.raise_for_status()
+        return response.json()
 
 
 @csrf_exempt
@@ -12,6 +21,7 @@ def tender_save_view(request):
         try:
             data = json.loads(request.body)
             selected_tenders = data.get('selectedTenders', [])
+            tasks = []
 
             for tender in selected_tenders:
                 if not Lot.objects.filter(
@@ -48,6 +58,30 @@ def tender_save_view(request):
                     tender = TrdBuy.objects.create(
                         lot=lot
                     )
+
+                    query = '''
+                        query($filter: LotsFiltersInput){
+                            Lots(filter: $filter) {
+                                trdBuyNumberAnno
+                            }
+                        }
+                        '''
+                    variables = {
+                        'filter': {
+                            'lotNumber': tender.get('lotNumber')
+                        }
+                    }
+
+                    task = asyncio.ensure_future(execute_graphql_query(query, variables))
+                    tasks.append(task)
+
+                    # Wait for all async tasks to complete
+                    results = asyncio.gather(*tasks)
+
+                    # Process the results
+                    for result in results:
+                        trd_buy_number = result['data']['Lots'][0]['trdBuyNumberAnno']
+                        # Update the TrdBuy model for the Lot using the obtained trd_buy_number
 
             return JsonResponse({'success': True})
         except Exception as e:
