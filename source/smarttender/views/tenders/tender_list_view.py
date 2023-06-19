@@ -5,14 +5,14 @@ from django.utils.http import urlencode
 from django.views.generic import ListView
 
 from smarttender.forms import SearchForm
-from smarttender.models import TrdBuy
+from smarttender.models import Lot
 from smarttender.utils import parse_excel_file, parse_enstru_excel_file
 
 
 class TenderListView(LoginRequiredMixin, ListView):
-    model = TrdBuy
+    model = Lot
     template_name = 'index.html'
-    context_object_name = 'tenders'
+    context_object_name = 'lots'
     paginate_by = 30
     paginate_orphans = 1
     ordering = '-created_at'

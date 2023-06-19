@@ -2,17 +2,16 @@ import math
 
 import pandas as pd
 
-from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Product, Supplier, Lot, Calculation
+from smarttender.models import RefTradeMethod, RefUnit, TrdBuy, Plan, Product, Supplier, Lot, Calculation, Offer
 
 
 def parse_excel_file(excel_file):
     df = pd.read_excel(excel_file)
-    empty_row_count = 0
 
     for index, row in df.iterrows():
         is_empty = pd.isnull(row[1]) and pd.isnull(row[2]) and pd.isnull(row[3])
         if is_empty:
-            empty_row_count += 1
+            continue
         else:
             empty_row_count = 0
 
@@ -35,10 +34,11 @@ def parse_excel_file(excel_file):
         plan = Plan.objects.create(
             price=row[5],
             count=row[6],
-            ref_units=unit_measure,
             amount=row[8],
             supply_date_ru=row[9]
         )
+        plan.ref_units.set([unit_measure])
+
         product, _ = Product.objects.get_or_create(
             trade_name=row[10]
         )
@@ -54,11 +54,15 @@ def parse_excel_file(excel_file):
         lot.plans.set([plan])
         lot.trd_buy = trd_buy
         lot.save()
-        lot.products.add(product)
-        lot.suppliers.add(supplier)
+
+        offer = Offer.objects.create(
+            product=product,
+            supplier=supplier,
+            lot=lot
+        )
 
         calculation = Calculation.objects.create(
-            trd_buy=trd_buy,
+            lot=lot,
             supplier_discount=row[12],
             vat=row[13],
             note=row[14],
