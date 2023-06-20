@@ -66,6 +66,7 @@
 <table class="table table-bordered table-hover mt-3" id="tenderTable">
     <thead class="table-primary">
     <tr>
+        <th scope="col">№ объявления</th>
         <th scope="col">№ лота</th>
         <th scope="col">Учреждение</th>
         <th scope="col">Наименование</th>
@@ -81,6 +82,7 @@
     {% for lot in lots %}
     <tbody>
     <tr class="tender-row" data-tender-id="{{ lot.id }}">
+        <td class="tender-cell">{{ lot.trd_buy.number_anno }}</td>
         <td class="tender-cell">{{ lot.lot_number }}</td>
         <td class="tender-cell">{{ lot.customer_name_ru }}</td>
         <td class="tender-cell">{{ lot.name_ru }}</td>
