@@ -7,7 +7,6 @@ Django==4.2.1
 django-bootstrap-v5==1.0.11
 django-environ==0.10.0
 et-xmlfile==1.1.0
-graphqlclient==0.2.4
 h11==0.14.0
 httpcore==0.17.2
 idna==3.4
