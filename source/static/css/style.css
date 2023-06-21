@@ -82,3 +82,6 @@ b {
   margin-right: 5px;
   float: left;
 }
+.modal-dialog {
+    max-width: 1200px !important;
+}

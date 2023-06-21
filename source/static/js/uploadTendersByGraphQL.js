@@ -45,6 +45,7 @@ function fetchData() {
       headerRow.appendChild(checkboxCell);
 
       var columnTitles = [
+        '№ объявления',
         '№ лота',
         'Учреждение',
         'Наименование',
@@ -81,53 +82,77 @@ function fetchData() {
         checkboxCell.appendChild(checkboxInput);
         row.appendChild(checkboxCell);
 
-        var lotNumber = document.createElement('td');
-        lotNumber.textContent = tender.lotNumber || '';
-        lotNumber.className = 'tender-cell lot-number';
-        row.appendChild(lotNumber);
-
-        var customerNameRu = document.createElement('td');
-        customerNameRu.textContent = tender.customerNameRu || '';
-        customerNameRu.className = 'tender-cell customer-name-ru';
-        row.appendChild(customerNameRu);
-
-        var nameRu = document.createElement('td');
-        nameRu.textContent = tender.nameRu || '';
-        nameRu.className = 'tender-cell name-ru';
-        row.appendChild(nameRu);
-
-        var descriptionRu = document.createElement('td');
-        descriptionRu.textContent = tender.descriptionRu || '';
-        descriptionRu.className = 'tender-cell description-ru';
-        row.appendChild(descriptionRu);
-
-        var price = document.createElement('td');
-        price.textContent = (tender.Plans && tender.Plans[0] && tender.Plans[0].amount != 0) ? 'KZT ' + tender.Plans[0].amount : '';
-        price.className = 'tender-cell price';
-        row.appendChild(price);
-
-        var count = document.createElement('td');
-        count.textContent = tender.Plans && tender.Plans[0] && tender.Plans[0].count || '';
-        count.className = 'tender-cell count';
-        row.appendChild(count);
-
-        var refUnit = document.createElement('td');
-        refUnit.textContent = tender.Plans && tender.Plans[0] && tender.Plans[0].RefUnits && tender.Plans[0].RefUnits.nameRu || '';
-        refUnit.className = 'tender-cell ref-unit';
-        row.appendChild(refUnit);
-
-        var amount = document.createElement('td');
-        amount.textContent = (tender.Plans && tender.Plans[0] && tender.Plans[0].amount != 0) ? 'KZT ' + tender.Plans[0].amount : '';
-        amount.className = 'tender-cell amount';
-        row.appendChild(amount);
-
-        var supplyDateRu = document.createElement('td');
-        supplyDateRu.textContent = tender.Plans && tender.Plans[0] && tender.Plans[0].supplyDateRu || '';
-        supplyDateRu.className = 'tender-cell supply-date-ru';
-        row.appendChild(supplyDateRu);
-
+        var tenderNumber = document.createElement('td');
+        tenderNumber.textContent = tender.numberAnno || '';
+        tenderNumber.className = 'tender-cell tender-number';
+        row.appendChild(tenderNumber);
 
         tableBody.appendChild(row);
+
+        if (tender.Lots && tender.Lots.length > 0) {
+            tender.Lots.forEach(function (tender) {
+                var row2 = document.createElement('tr');
+                row2.className = 'tender-row'
+
+                var empty1 = document.createElement('td');
+                empty1.textContent = '';
+                row2.appendChild(empty1);
+
+                var empty2 = document.createElement('td');
+                empty2.textContent = '';
+                row2.appendChild(empty2);
+
+
+                var lotNumber = document.createElement('td');
+                lotNumber.textContent = tender.lotNumber || '';
+                lotNumber.className = 'tender-cell lot-number';
+                row2.appendChild(lotNumber);
+
+                var customerNameRu = document.createElement('td');
+                customerNameRu.textContent = tender.customerNameRu || '';
+                customerNameRu.className = 'tender-cell customer-name-ru';
+                row2.appendChild(customerNameRu);
+
+                var nameRu = document.createElement('td');
+                nameRu.textContent = tender.nameRu || '';
+                nameRu.className = 'tender-cell name-ru';
+                row2.appendChild(nameRu);
+
+                var descriptionRu = document.createElement('td');
+                descriptionRu.textContent = tender.descriptionRu || '';
+                descriptionRu.className = 'tender-cell description-ru';
+                row2.appendChild(descriptionRu);
+
+                var price = document.createElement('td');
+                price.textContent = (tender.Plans && tender.Plans[0] && tender.Plans[0].amount != 0) ? 'KZT ' + tender.Plans[0].amount : '';
+                price.className = 'tender-cell price';
+                row2.appendChild(price);
+
+                var count = document.createElement('td');
+                count.textContent = tender.Plans && tender.Plans[0] && tender.Plans[0].count || '';
+                count.className = 'tender-cell count';
+                row2.appendChild(count);
+
+                var refUnit = document.createElement('td');
+                refUnit.textContent = tender.Plans && tender.Plans[0] && tender.Plans[0].RefUnits && tender.Plans[0].RefUnits.nameRu || '';
+                refUnit.className = 'tender-cell ref-unit';
+                row2.appendChild(refUnit);
+
+                var amount = document.createElement('td');
+                amount.textContent = (tender.Plans && tender.Plans[0] && tender.Plans[0].amount != 0) ? 'KZT ' + tender.Plans[0].amount : '';
+                amount.className = 'tender-cell amount';
+                row2.appendChild(amount);
+
+                var supplyDateRu = document.createElement('td');
+                supplyDateRu.textContent = tender.Plans && tender.Plans[0] && tender.Plans[0].supplyDateRu || '';
+                supplyDateRu.className = 'tender-cell supply-date-ru';
+                row2.appendChild(supplyDateRu);
+
+                tableBody.appendChild(row2);
+            })
+        }
+
+
       });
     })
 

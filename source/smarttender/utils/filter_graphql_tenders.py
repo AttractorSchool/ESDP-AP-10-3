@@ -1,26 +1,28 @@
 from smarttender.models import EnsTruCode
 
 
-def filter_graphql_tenders(lots, search_value):
-    filtered_lots = []
+def filter_graphql_tenders(tenders, search_value):
+    filtered_tenders = []
 
     if search_value:
-        for lot in lots:
-            plans = lot.get('Plans', [])
-            for plan in plans:
-                if 'refEnstruCode' in plan and search_value in plan['refEnstruCode']:
-                    filtered_lots.append(lot)
-                    break
-    else:
-        for lot in lots:
-            plans = lot.get('Plans', [])
-            for plan in plans:
-                if 'refEnstruCode' in plan:
-                    ref_enstru_code = plan['refEnstruCode']
-                    matching_codes = [ens_tru_code for ens_tru_code in EnsTruCode.objects.all() if
-                                      ref_enstru_code in ens_tru_code.code]
-                    if matching_codes:
-                        filtered_lots.append(lot)
+        for tender in tenders:
+            for lot in tender['Lots']:
+                for plan in lot['Plans']:
+                    if 'refEnstruCode' in plan and search_value in plan['refEnstruCode']:
+                        filtered_tenders.append(tender)
                         break
+    else:
+        for tender in tenders:
+            for lot in tender['Lots']:
+                filtered_tenders.append(tender)
+                break
+                # for plan in lot['Plans']:
+                #     if 'refEnstruCode' in plan:
+                #         ref_enstru_code = plan['refEnstruCode']
+                #         matching_codes = [ens_tru_code for ens_tru_code in EnsTruCode.objects.all() if
+                #                           ref_enstru_code in ens_tru_code.code]
+                #         if matching_codes:
+                #             filtered_tenders.append(tender)
+                #             break
 
-    return filtered_lots
+    return filtered_tenders
