@@ -3,22 +3,27 @@ function saveSelectedTenders() {
   var tenderCheckboxes = document.querySelectorAll('input[name="selectedTenders[]"]:checked');
 
   tenderCheckboxes.forEach(function (checkbox) {
-    var tenderRow = checkbox.closest('.tender-row');
-    console.log(tenderRow);
 
-    var tenderData = {
-      lotNumber: tenderRow.querySelector('.lot-number').textContent,
-      customerNameRu: tenderRow.querySelector('.customer-name-ru').textContent,
-      nameRu: tenderRow.querySelector('.name-ru').textContent,
-      descriptionRu: tenderRow.querySelector('.description-ru').textContent,
-      price: tenderRow.querySelector('.price').textContent.replace('KZT ', ''),
-      count: tenderRow.querySelector('.count').textContent,
-      refUnit: tenderRow.querySelector('.ref-unit').textContent,
-      amount: tenderRow.querySelector('.amount').textContent.replace('KZT ', ''),
-      supplyDateRu: tenderRow.querySelector('.supply-date-ru').textContent
-    };
+    console.log(checkbox.value)
 
-    selectedTenders.push(tenderData);
+//    var tenderRow = checkbox.closest('.tender-row');
+//    console.log(tenderRow);
+//
+//    var tenderData = {
+//      trdBuyNumberAnno: tenderRow.querySelector('.tender-number').textContent,
+//      lotNumber: tenderRow2.querySelector('.lot-number').textContent,
+//      customerNameRu: tenderRow2.querySelector('.customer-name-ru').textContent,
+//      nameRu: tenderRow2.querySelector('.name-ru').textContent,
+//      descriptionRu: tenderRow2.querySelector('.description-ru').textContent,
+//      price: tenderRow2.querySelector('.price').textContent.replace('KZT ', ''),
+//      count: tenderRow2.querySelector('.count').textContent,
+//      refUnit: tenderRow2.querySelector('.ref-unit').textContent,
+//      amount: tenderRow2.querySelector('.amount').textContent.replace('KZT ', ''),
+//      supplyDateRu: tenderRow2.querySelector('.supply-date-ru').textContent
+//    };
+//    console.log(tenderData);
+//
+    selectedTenders.push(checkbox.value);
   });
 
   var requestOptions = {
@@ -40,9 +45,9 @@ function saveSelectedTenders() {
     .then(function (data) {
       console.log(data);
     })
-    .then(function () {
-        location.reload();
-    })
+//    .then(function () {
+//        location.reload();
+//    })
     .catch(function (error) {
       console.log(error);
     });

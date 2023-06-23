@@ -22,7 +22,7 @@ function fetchData() {
     })
     .then(function (data) {
       console.log(data);
-
+       //start header
       var tenderCount = data.tenders.length;
       var tenderCountElement = document.getElementById('tenderCount');
       tenderCountElement.textContent = 'Количество объявлений: ' + tenderCount;
@@ -65,6 +65,7 @@ function fetchData() {
       });
 
       tableHead.appendChild(headerRow);
+      //header end
 
       var tableBody = document.getElementById('tenderTableBody');
       tableBody.innerHTML = '';
@@ -74,11 +75,18 @@ function fetchData() {
         row.className = 'tender-row'
 
         var checkboxCell = document.createElement('td');
-        var checkboxInput = document.createElement('input');
+        var checkboxInput = document.createElement('input')
+        //
+
+
+//        checkboxInput.addEventListener('click', function () {
+//                console.log("sda" + checkboxInput.value)
+//        });
+
         checkboxInput.type = 'checkbox';
         checkboxInput.className = 'form-check-input';
         checkboxInput.name = 'selectedTenders[]';
-        checkboxInput.value = tender.id;
+        checkboxInput.value = JSON.stringify(tender)
         checkboxCell.appendChild(checkboxInput);
         row.appendChild(checkboxCell);
 
@@ -92,7 +100,7 @@ function fetchData() {
         if (tender.Lots && tender.Lots.length > 0) {
             tender.Lots.forEach(function (tender) {
                 var row2 = document.createElement('tr');
-                row2.className = 'tender-row'
+                row2.className = 'tender-row-2'
 
                 var empty1 = document.createElement('td');
                 empty1.textContent = '';
@@ -151,8 +159,6 @@ function fetchData() {
                 tableBody.appendChild(row2);
             })
         }
-
-
       });
     })
 
