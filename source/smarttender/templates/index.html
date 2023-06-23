@@ -66,6 +66,7 @@
 <table class="table table-bordered table-hover mt-3" id="tenderTable">
     <thead class="table-primary">
     <tr>
+        <th scope="col">№ объявления</th>
         <th scope="col">№ лота</th>
         <th scope="col">Учреждение</th>
         <th scope="col">Наименование</th>
@@ -81,23 +82,31 @@
     {% for lot in lots %}
     <tbody>
     <tr class="tender-row" data-tender-id="{{ lot.id }}">
+        <td class="tender-cell">{{ lot.trd_buy.number_anno }}</td>
         <td class="tender-cell">{{ lot.lot_number }}</td>
         <td class="tender-cell">{{ lot.customer_name_ru }}</td>
         <td class="tender-cell">{{ lot.name_ru }}</td>
         <td class="tender-cell">{{ lot.description_ru }}</td>
-        {% if lot.plans.price %}
-        <td class="tender-cell">KZT {{ lot.plans.price }}</td>
+        <!--        Загрузка планов-->
+        {% if lot.plans.all %}
+        {% for plan in lot.plans.all %}
+        {% if plan.price %}
+        <td class="tender-cell">KZT {{ plan.price }}</td>
         {% else %}
-        <td class="tender-cell">{{ lot.plans.price }}</td>
+        <td class="tender-cell">{{ plan.price }}</td>
         {% endif %}
-        <td class="tender-cell">{{ lot.plans.count }}</td>
-        <td class="tender-cell">{{ lot.plans.ref_units.name_ru }}</td>
-        {% if lot.plans.amount %}
-        <td class="tender-cell">KZT {{ lot.plans.amount }}</td>
+        <td class="tender-cell">{{ plan.count }}</td>
+        {% for unit in plan.ref_units.all %}
+        <td class="tender-cell">{{ unit.name_ru }}</td>
+        {% endfor %}
+        {% if plan.amount %}
+        <td class="tender-cell">KZT {{ plan.amount }}</td>
         {% else %}
-        <td class="tender-cell">{{ lot.plans.amount }}</td>
+        <td class="tender-cell">{{ plan.amount }}</td>
         {% endif %}
-        <td class="tender-cell">{{ lot.plans.supply_date_ru }}</td>
+        <td class="tender-cell">{{ plan.supply_date_ru }}</td>
+        {% endfor %}
+        {% endif %}
         <td data-field="lot" class="modal-trigger text-center" data-cell-id="{{ lot.id }}"
             data-lot="{{ tender.lot }}">
             <button class="btn btn-secondary">

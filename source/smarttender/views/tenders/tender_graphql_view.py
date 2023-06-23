@@ -8,36 +8,147 @@ from django.views.decorators.csrf import csrf_exempt
 
 from smarttender.utils import send_graphql_request, filter_graphql_tenders, parse_graphql_response
 
+# GRAPHQL_QUERY = '''
+#     {
+#         Lots(limit: 200) {
+#             lotNumber
+#             customerNameRu
+#             nameRu
+#             descriptionRu
+#             Plans {
+#                 price
+#                 count
+#                 RefUnits {
+#                     nameRu
+#                 }
+#                 amount
+#                 supplyDateRu
+#                 refEnstruCode
+#             }
+#             TrdBuy {
+#                 publishDate
+#                 endDate
+#                 RefTradeMethods {
+#                     nameRu
+#                 }
+#             }
+#             Files {
+#                 filePath
+#             }
+#         }
+#     }
+#     '''
+
 GRAPHQL_QUERY = '''
+{
+    TrdBuy(filter: {publishDate: "2023-06-20"})
     {
-        Lots(limit: 200) {
-            lotNumber
-            customerNameRu
+        id
+        numberAnno
+        nameKz
+        nameRu
+        totalSum
+        countLots
+        customerNameKz
+        customerNameRu
+        orgBin
+        orgPid
+        orgNameKz
+        orgNameRu
+        startDate
+        repeatStartDate
+        endDate
+        publishDate
+        itogiDatePublic
+        discusStartDate
+        discusEndDate
+        lastUpdateDate
+        finYear
+        kato
+        Files
+        {
+            originalName
+            nameKz
             nameRu
+            filePath
+        }
+        Lots
+        {
+            id
+            lotNumber
+            refLotStatusId
+            lastUpdateDate
+            count
+            amount
+            nameKz
+            nameRu
+            descriptionKz
             descriptionRu
-            Plans {
-                price
+            customerNameKz
+            customerNameRu
+            trdBuyNumberAnno
+            dumping
+            pointList
+            Plans
+            {
+                id
+                subjectNameKz
+                subjectNameRu
+                nameKz
+                nameRu
+                refUnitsCode
                 count
-                RefUnits {
-                    nameRu
-                }
+                price
                 amount
-                supplyDateRu
                 refEnstruCode
-            }
-            TrdBuy {
-                publishDate
-                endDate
-                RefTradeMethods {
+                dateCreate
+                descKz
+                descRu
+                supplyDateRu
+                RefUnits
+                {
+                    nameKz
                     nameRu
                 }
             }
-            Files {
+            Files
+            {
+                originalName
+                nameKz
+                nameRu
                 filePath
+            }            
+        }
+        RefTradeMethods
+            {
+                id
+                nameKz
+                nameRu
+                code
+                symbolCode
             }
+        RefSubjectType
+        {
+            id
+            nameKz
+            nameRu
+        }
+        RefBuyStatus
+        {
+            id
+            nameKz
+            nameRu
+            code
+        }
+        RefTypeTrade
+        {
+            id
+            nameKz
+            nameRu
         }
     }
-    '''
+}
+'''
 
 
 @csrf_exempt
@@ -48,9 +159,9 @@ def tender_graphql_view(request: WSGIRequest):
         search_value = data.get('search_value')
 
         data = send_graphql_request(GRAPHQL_QUERY)
-        lots = data.get('Lots', [])
-        filtered_lots = filter_graphql_tenders(lots, search_value)
-        tenders = parse_graphql_response(filtered_lots)
+        tenders = data.get('TrdBuy', [])
+        filtered_tenders = filter_graphql_tenders(tenders, search_value)
+        tenders = parse_graphql_response(filtered_tenders)
 
         return JsonResponse({'tenders': tenders})
 
