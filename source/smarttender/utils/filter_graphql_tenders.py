@@ -12,17 +12,17 @@ def filter_graphql_tenders(tenders, search_value):
                         filtered_tenders.append(tender)
                         break
     else:
-        for tender in tenders:
-            for lot in tender['Lots']:
-                filtered_tenders.append(tender)
-                break
-                # for plan in lot['Plans']:
-                #     if 'refEnstruCode' in plan:
-                #         ref_enstru_code = plan['refEnstruCode']
-                #         matching_codes = [ens_tru_code for ens_tru_code in EnsTruCode.objects.all() if
-                #                           ref_enstru_code in ens_tru_code.code]
-                #         if matching_codes:
-                #             filtered_tenders.append(tender)
-                #             break
+        filtered_tenders = tenders
+        # for tender in tenders:
+        #     filtered_tenders.append(tender)
+        #     break
+        # for plan in lot['Plans']:
+        #     if 'refEnstruCode' in plan:
+        #         ref_enstru_code = plan['refEnstruCode']
+        #         matching_codes = [ens_tru_code for ens_tru_code in EnsTruCode.objects.all() if
+        #                           ref_enstru_code in ens_tru_code.code]
+        #         if matching_codes:
+        #             filtered_tenders.append(tender)
+        #             break
 
     return filtered_tenders

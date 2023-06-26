@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 import requests
 import urllib3
@@ -39,9 +40,10 @@ from smarttender.utils import send_graphql_request, filter_graphql_tenders, pars
 #     }
 #     '''
 
+CURRENT_DATE = date.today().isoformat()
 GRAPHQL_QUERY = '''
 {
-    TrdBuy(filter: {publishDate: "2023-06-20"})
+    TrdBuy(filter: {publishDate: "%s"})
     {
         id
         numberAnno
@@ -148,8 +150,7 @@ GRAPHQL_QUERY = '''
         }
     }
 }
-'''
-
+''' % CURRENT_DATE
 
 @csrf_exempt
 def tender_graphql_view(request: WSGIRequest):
