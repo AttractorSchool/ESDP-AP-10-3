@@ -133,7 +133,7 @@ class Calculation(models.Model):
     )
 
     def __str__(self):
-        return self.trd_buy
+        return self.lot
 
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True

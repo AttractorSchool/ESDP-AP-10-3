@@ -55,7 +55,7 @@
   z-index: 999;
   top: 50%;
   left: 80%;
-  transform: translate(50%, 0);
+  transform: translate(-30%, 0);
   width: 100%;
   max-width: 507px;
   overflow-y: auto;
