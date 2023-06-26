@@ -100,7 +100,7 @@ function fetchData() {
         if (tender.Lots && tender.Lots.length > 0) {
             tender.Lots.forEach(function (tender) {
                 var row2 = document.createElement('tr');
-                row2.className = 'tender-row-2'
+                row2.className = 'tender-row'
 
                 var empty1 = document.createElement('td');
                 empty1.textContent = '';
@@ -109,7 +109,6 @@ function fetchData() {
                 var empty2 = document.createElement('td');
                 empty2.textContent = '';
                 row2.appendChild(empty2);
-
 
                 var lotNumber = document.createElement('td');
                 lotNumber.textContent = tender.lotNumber || '';

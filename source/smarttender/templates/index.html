@@ -106,6 +106,12 @@
         {% endif %}
         <td class="tender-cell">{{ plan.supply_date_ru }}</td>
         {% endfor %}
+        {% else %}
+        <td class="tender-cell"></td>
+        <td class="tender-cell"></td>
+        <td class="tender-cell"></td>
+        <td class="tender-cell"></td>
+        <td class="tender-cell"></td>
         {% endif %}
         <td data-field="lot" class="modal-trigger text-center" data-cell-id="{{ lot.id }}"
             data-lot="{{ tender.lot }}">
