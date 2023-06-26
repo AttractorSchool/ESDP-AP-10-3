@@ -67,7 +67,8 @@ class TrdBuy(models.Model):
         blank=True,
         verbose_name='Наименование организатора на русском языке'
     )
-    start_date = models.DateField(
+    start_date = models.CharField(
+        max_length=100,
         null=True,
         blank=True,
         verbose_name='Дата начала приема заявок'
@@ -84,7 +85,8 @@ class TrdBuy(models.Model):
         blank=True,
         verbose_name="Дата окончания приема заявок"
     )
-    itogi_date_public = models.DateField(
+    itogi_date_public = models.CharField(
+        max_length=100,
         null=True,
         blank=True,
         verbose_name='Дата публикации итогов'
