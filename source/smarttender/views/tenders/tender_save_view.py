@@ -101,7 +101,13 @@ def tender_save_view(request):
                     for lot in lots:
                         lot_id = lot_save(trd_buy, lot)
 
-
+                        plans = lot.get('Plans')
+                        if plans:
+                            for plan in plans:
+                                ref_units = plan.get('RefUnits')
+                                ref_unit = get_ref_units(ref_units)
+                                plan_obj = plan_save(lot_id, plan)
+                                plan_obj.ref_units.add(ref_unit)
 
 
 
