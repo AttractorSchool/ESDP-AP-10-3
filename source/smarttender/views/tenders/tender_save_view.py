@@ -96,6 +96,11 @@ def tender_save_view(request):
             for tender in selected_tenders:
                 trd_buy = trd_buy_save(tender)
 
+                lots = tender.get('Lots')
+                if lots:
+                    for lot in lots:
+                        lot_id = lot_save(trd_buy, lot)
+
 
 
 
