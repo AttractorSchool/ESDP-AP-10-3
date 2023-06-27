@@ -108,10 +108,7 @@ def tender_save_view(request):
                                 ref_unit = get_ref_units(ref_units)
                                 plan_obj = plan_save(lot_id, plan)
                                 plan_obj.ref_units.add(ref_unit)
-
-
-
-
+            # TODO дописать функцию, а именно добавить сохранение остальных полей
 
             #
             #
