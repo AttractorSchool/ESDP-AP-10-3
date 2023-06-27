@@ -99,6 +99,17 @@ def get_ref_trade_methods(trade_methods):
         pass
 
 
+def get_ref_subject_type(subject_type):
+    try:
+        ref_subject_type, created = RefSubjectType.objects.get_or_create(
+            name_kz=subject_type.get('nameKz'),
+            name_ru=subject_type.get('nameRu')
+        )
+        return ref_subject_type
+    except KeyError:
+        pass
+
+
 @csrf_exempt
 def tender_save_view(request):
     if request.method == 'POST':
@@ -124,8 +135,14 @@ def tender_save_view(request):
 
                 trade_methods = tender.get('RefTradeMethods')
                 if trade_methods:
-                    trade_method = get_ref_trade_methods(trade_methods)
-                    trd_buy.ref_trade_methods.add(trade_method)
+                    ref_trade_method = get_ref_trade_methods(trade_methods)
+                    trd_buy.ref_trade_methods.add(ref_trade_method)
+
+                subject_type = tender.get('RefSubjectType')
+                if subject_type:
+                    ref_subject_type = get_ref_subject_type(subject_type)
+                    trd_buy.ref_subject_type.add(ref_subject_type)
+
             # TODO дописать функцию, а именно добавить сохранение остальных полей
 
             #

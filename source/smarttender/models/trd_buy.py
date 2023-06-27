@@ -100,12 +100,9 @@ class TrdBuy(models.Model):
         blank=True,
         to='smarttender.RefTradeMethod'
     )
-    ref_subject_type = models.ForeignKey(
-        null=True,
+    ref_subject_type = models.ManyToManyField(
         blank=True,
-        to='smarttender.RefSubjectType',
-        on_delete=models.CASCADE,
-        related_name='trd_buys'
+        to='smarttender.RefSubjectType'
     )
     ref_buy_status = models.ForeignKey(
         null=True,
