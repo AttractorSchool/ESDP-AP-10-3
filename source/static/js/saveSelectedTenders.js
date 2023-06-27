@@ -26,9 +26,9 @@ function saveSelectedTenders() {
         .then(function (data) {
             console.log(data);
         })
-//        .then(function () {
-//            location.reload();
-//        })
+        .then(function () {
+            location.reload();
+        })
         .catch(function (error) {
             console.log(error);
         });
