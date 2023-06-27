@@ -108,12 +108,9 @@ class TrdBuy(models.Model):
         blank=True,
         to='smarttender.RefBuyStatus'
     )
-    ref_type_trade = models.ForeignKey(
-        null=True,
+    ref_type_trade = models.ManyToManyField(
         blank=True,
-        to='smarttender.RefTypeTrade',
-        on_delete=models.CASCADE,
-        related_name='trd_buys'
+        to='smarttender.RefTypeTrade'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

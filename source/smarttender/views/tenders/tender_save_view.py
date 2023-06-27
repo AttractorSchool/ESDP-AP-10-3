@@ -122,6 +122,17 @@ def get_ref_buy_status(buy_status):
         pass
 
 
+def get_ref_type_trade(type_trade):
+    try:
+        type_trade, created = RefTypeTrade.objects.get_or_create(
+            name_kz=type_trade.get('nameKz'),
+            name_ru=type_trade.get('nameRu')
+        )
+        return type_trade
+    except KeyError:
+        pass
+
+
 @csrf_exempt
 def tender_save_view(request):
     if request.method == 'POST':
@@ -159,6 +170,11 @@ def tender_save_view(request):
                 if buy_status:
                     ref_buy_status = get_ref_buy_status(buy_status)
                     trd_buy.ref_buy_status.add(ref_buy_status)
+
+                type_trade = tender.get('RefTypeTrade')
+                if type_trade:
+                    ref_type_trade = get_ref_type_trade(type_trade)
+                    trd_buy.ref_type_trade.add(ref_type_trade)
 
             # TODO дописать функцию, а именно добавить сохранение остальных полей
 
