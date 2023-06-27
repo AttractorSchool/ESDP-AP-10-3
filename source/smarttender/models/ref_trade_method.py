@@ -22,7 +22,7 @@ class RefTradeMethod(models.Model):
         blank=True,
         verbose_name='Цифровой код'
     )
-    symbolCode = models.CharField(
+    symbol_code = models.CharField(
         max_length=255,
         null=True,
         blank=True,

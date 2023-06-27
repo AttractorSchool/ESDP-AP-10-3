@@ -86,6 +86,19 @@ def plan_save(lot, plan):
     return plan
 
 
+def get_ref_trade_methods(trade_methods):
+    try:
+        ref_trade_method, created = RefTradeMethod.objects.get_or_create(
+            name_kz=trade_methods.get('nameKz'),
+            name_ru=trade_methods.get('nameRu'),
+            code=trade_methods.get('code'),
+            symbol_code=trade_methods.get('symbolCode')
+        )
+        return ref_trade_method
+    except KeyError:
+        pass
+
+
 @csrf_exempt
 def tender_save_view(request):
     if request.method == 'POST':
@@ -108,6 +121,11 @@ def tender_save_view(request):
                                 ref_unit = get_ref_units(ref_units)
                                 plan_obj = plan_save(lot_id, plan)
                                 plan_obj.ref_units.add(ref_unit)
+
+                trade_methods = tender.get('RefTradeMethods')
+                if trade_methods:
+                    trade_method = get_ref_trade_methods(trade_methods)
+                    trd_buy.ref_trade_methods.add(trade_method)
             # TODO дописать функцию, а именно добавить сохранение остальных полей
 
             #
