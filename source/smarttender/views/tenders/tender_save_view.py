@@ -110,6 +110,18 @@ def get_ref_subject_type(subject_type):
         pass
 
 
+def get_ref_buy_status(buy_status):
+    try:
+        ref_buy_status, created = RefBuyStatus.objects.get_or_create(
+            name_kz=buy_status.get('nameKz'),
+            name_ru=buy_status.get('nameRu'),
+            code=buy_status.get('code')
+        )
+        return ref_buy_status
+    except KeyError:
+        pass
+
+
 @csrf_exempt
 def tender_save_view(request):
     if request.method == 'POST':
@@ -142,6 +154,11 @@ def tender_save_view(request):
                 if subject_type:
                     ref_subject_type = get_ref_subject_type(subject_type)
                     trd_buy.ref_subject_type.add(ref_subject_type)
+
+                buy_status = tender.get('RefBuyStatus')
+                if buy_status:
+                    ref_buy_status = get_ref_buy_status(buy_status)
+                    trd_buy.ref_buy_status.add(ref_buy_status)
 
             # TODO дописать функцию, а именно добавить сохранение остальных полей
 
