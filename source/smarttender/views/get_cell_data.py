@@ -10,7 +10,17 @@ def get_cell_data(request):
     cell_id = request.GET.get('cell_id')
     tender = get_object_or_404(Calculation, id=cell_id)
     plan = get_object_or_404(Plan, lot=tender.lot)
-    offer = get_object_or_404(Offer, lot=tender.lot)
+    offers = Offer.objects.filter(lot=tender.lot)
+
+    product_names = []
+    supplier_names = []
+
+    for offer in offers:
+        product_names.append(offer.product.trade_name)
+        if offer.supplier:
+            supplier_names.append(offer.supplier.name)
+        else:
+            supplier_names.append('Поставщик не выбран')
     data = {
         'tender_id': tender.id,
         'lot_number': tender.lot.lot_number,
@@ -22,8 +32,8 @@ def get_cell_data(request):
         'ref_unit':  list(plan.ref_units.values('name_ru')),
         'amount': plan.amount,
         'supply_date_ru': plan.supply_date_ru,
-        'products': offer.product.trade_name,
-        'suppliers': offer.supplier.name,
+        'products': product_names,
+        'suppliers': supplier_names,
         'supplier_discount': tender.supplier_discount,
         'vat': tender.vat,
         'note': tender.note,
