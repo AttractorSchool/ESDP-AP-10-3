@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Загрузить PDF</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        th {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Загрузить PDF</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="pdf_file" accept=".pdf">
+        <button type="submit" class="btn btn-outline-dark mb-3">Загрузить</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Торговое наименование</th>
+                <th>МНН</th>
+                <th>Лекарственная форма</th>
+                <th>АТХ код</th>
+                <th>Регистрационное удостоверение</th>
+                <th>Единица измерения</th>
+                <th>Предельная цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for price in prices %}
+            <tr>
+                <td>{{ price.trade_name }}</td>
+                <td>{{ price.mnn }}</td>
+                <td>{{ price.medicine }}</td>
+                <td>{{ price.registration_number }}</td>
+                <td>{{ price.unit }}</td>
+                <td>{{ price.limit_price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}
