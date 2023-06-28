@@ -32,7 +32,7 @@ def get_cell_data(request):
         'overall_info': tender.overall_info,
         'publish_date': tender.lot.trd_buy.name_ru,
         'end_date': tender.lot.trd_buy.end_date,
-        'ref_trade_method': tender.lot.trd_buy.ref_trade_methods.name_ru,
+        'ref_trade_method': tender.lot.trd_buy.ref_trade_methods.first().name_ru,
         'paper_ad_link': tender.paper_ad_link,
         'lot_link': tender.lot_link,
         'profit_rate': tender.profit_rate,

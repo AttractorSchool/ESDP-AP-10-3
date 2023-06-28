@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from smarttender.models import TrdBuy
 from smarttender.utils.tenders import create_trd_buy, create_lot, get_ref_units, create_plan, get_ref_trade_methods, \
-    get_ref_subject_type, get_ref_buy_status, get_ref_type_trade, create_calculation
+    get_ref_subject_type, get_ref_buy_status, get_ref_type_trade, create_calculation, create_offer
 
 
 @csrf_exempt
@@ -27,6 +27,7 @@ def tender_save_view(request):
                         for lot in lots:
                             lot_id = create_lot(trd_buy, lot)
                             create_calculation(lot_id)
+                            create_offer(lot_id)
 
                             plans = lot.get('Plans')
                             if plans:
