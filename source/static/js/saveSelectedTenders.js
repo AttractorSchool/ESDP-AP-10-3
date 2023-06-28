@@ -1,53 +1,38 @@
 function saveSelectedTenders() {
-  var selectedTenders = [];
-  var tenderCheckboxes = document.querySelectorAll('input[name="selectedTenders[]"]:checked');
+    let selectedTenders = [];
+    let tenderCheckboxes = document.querySelectorAll('input[name="selectedTenders[]"]:checked');
 
-  tenderCheckboxes.forEach(function (checkbox) {
-    var tenderRow = checkbox.closest('.tender-row');
-    console.log(tenderRow);
+    tenderCheckboxes.forEach(function (checkbox) {
+        let tenderData = JSON.parse(checkbox.value)
+        selectedTenders.push(tenderData);
+    });
 
-    var tenderData = {
-      lotNumber: tenderRow.querySelector('.lot-number').textContent,
-      customerNameRu: tenderRow.querySelector('.customer-name-ru').textContent,
-      nameRu: tenderRow.querySelector('.name-ru').textContent,
-      descriptionRu: tenderRow.querySelector('.description-ru').textContent,
-      price: tenderRow.querySelector('.price').textContent,
-      count: tenderRow.querySelector('.count').textContent,
-      refUnit: tenderRow.querySelector('.ref-unit').textContent,
-      amount: tenderRow.querySelector('.amount').textContent,
-      supplyDateRu: tenderRow.querySelector('.supply-date-ru').textContent
+    let requestOptions = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ selectedTenders: selectedTenders })
     };
 
-    selectedTenders.push(tenderData);
-  });
-
-  var requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ selectedTenders: selectedTenders })
-  };
-
-  fetch('/save_tenders', requestOptions)
-    .then(function (response) {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Ошибка запроса. Код ошибки: ' + response.status);
-      }
-    })
-    .then(function (data) {
-      console.log(data);
-    })
-    .then(function () {
-        location.reload();
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    fetch('/save_tenders', requestOptions)
+        .then(function (response) {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Ошибка запроса. Код ошибки: ' + response.status);
+        }
+        })
+        .then(function (data) {
+            console.log(data);
+        })
+        .then(function () {
+            location.reload();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
-
-var saveBtn = document.getElementById('saveBtn');
+let saveBtn = document.getElementById('saveBtn');
 saveBtn.addEventListener('click', saveSelectedTenders);

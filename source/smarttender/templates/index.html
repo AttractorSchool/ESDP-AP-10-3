@@ -29,7 +29,7 @@
 </div>
 
 <!--Поиск по коду ЕНС ТРУ. Если значение пустое, то загружает все объявления-->
-<div class="d-flex tenders_search mt-3" id="searchForm">
+<div class="d-flex tenders_search mt-3 pb-5" id="searchForm">
     <input class="form-control me-2" type="search" placeholder="Введите код ЕНС ТРУ" aria-label="Search"
            style="width: 280px;" name="search_value" id="searchValueInput">
     <button type="button" class="btn btn-outline-dark me-3" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -43,6 +43,8 @@
     </button>
     <!--Модальное окно с кодами ЕНС ТРУ-->
     {% include 'partial/enstru_codes_modal.html' %}
+    <!-- Форма добавления данных -->
+    {% include 'partial/enstru_code_create.html' %}
 </div>
 
 {% if messages %}
@@ -57,12 +59,14 @@
 {% if is_paginated %}
 {% include 'partial/pagination.html' %}
 {% endif %}
-{% if tenders %}
+{% if lots %}
+<p>Количество объявлений: {{ lots|length }}</p>
 
 <!--Вывод объявлений из БД-->
-<table class="table table-bordered table-hover mt-5" id="tenderTable">
+<table class="table table-bordered table-hover mt-3" id="tenderTable">
     <thead class="table-primary">
     <tr>
+        <th scope="col">№ объявления</th>
         <th scope="col">№ лота</th>
         <th scope="col">Учреждение</th>
         <th scope="col">Наименование</th>
@@ -75,30 +79,17 @@
         <th scope="col">Подробная информация</th>
     </tr>
     </thead>
-    {% for tender in tenders %}
+    {% for lot in lots %}
     <tbody>
-    <tr class="tender-row" data-tender-id="{{ tender.id }}">
-        <td class="tender-cell">{{ tender.lot.lot_number }}</td>
-        <td class="tender-cell">{{ tender.lot.customer_name_ru }}</td>
-        <td class="tender-cell">{{ tender.lot.name_ru }}</td>
-        <td class="tender-cell">{{ tender.lot.description_ru }}</td>
-        {% if tender.lot.plans.price is not null %}
-        <td class="tender-cell">KZT {{ tender.lot.plans.price }}</td>
-        {% else %}
-        <td class="tender-cell">{{ tender.lot.plans.price }}</td>
-        {% endif %}
-        <td class="tender-cell">{{ tender.lot.plans.count }}</td>
-        <td class="tender-cell">{{ tender.lot.plans.ref_units.name_ru }}</td>
-        <td class="tender-cell">KZT {{ tender.lot.plans.amount }}</td>
-        <td class="tender-cell">{{ tender.lot.plans.supply_date_ru }}</td>
-        <td data-field="lot" class="modal-trigger text-center" data-cell-id="{{ tender.id }}"
-            data-lot="{{ tender.lot }}">
-            <button class="btn btn-secondary">
-                Подробнее
-            </button>
-        </td>
-        <!--Модальное окно с подробной информацией о тендере-->
-        {% include 'partial/tender_details_modal.html' %}
+    <tr class="tender-row" data-tender-id="{{ lot.id }}">
+        <td class="tender-cell">{{ lot.trd_buy.number_anno }}</td>
+        <td class="tender-cell">{{ lot.lot_number }}</td>
+        <td class="tender-cell">{{ lot.customer_name_ru }}</td>
+        <td class="tender-cell">{{ lot.name_ru }}</td>
+        <td class="tender-cell">{{ lot.description_ru }}</td>
+
+        <!--        Загрузка планов-->
+        {% include 'partial/tender_plans.html' %}
     </tr>
     </tbody>
     {% endfor %}

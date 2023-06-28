@@ -8,5 +8,5 @@ from smarttender.models import EnsTruCode
 class EnsTruListView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
-        codes = EnsTruCode.objects.all().values()
+        codes = EnsTruCode.objects.all().order_by('-created_at').values()
         return JsonResponse({'enstru_codes': list(codes)}, safe=False)

@@ -4,11 +4,22 @@
     <title>Similar Products</title>
 </head>
 <body>
-    <h1>Похожие товары по МНН для: {{ tender.name }}
-    </h1>{% if selected_product%}
-    <h2>Selected Product:</h2>
-    <p>{{ selected_product }}</p>
+    <h1>Подходящие товары по МНН для: {{ tender.lot.name_ru }}</h1>
+
+    {% if selected_products %}
+        <h2>Выбранные товары:</h2>
+        <ul>
+            {% for product in selected_products %}
+                <li>
+                    <strong>Торговое наименование:</strong> {{ product.trade_name }}<br>
+                    <strong>Производитель:</strong> {{ product.producer }}<br>
+                    <strong>Страна производителя:</strong> {{ product.country }}<br>
+                    <strong>Дата регистрации:</strong> {{ product.register_date }}<br>
+                </li>
+            {% endfor %}
+        </ul>
     {% endif %}
+
     <form method="POST" action="{% url 'selected_product' %}">
         {% csrf_token %}
         <input type="hidden" name="tender_id" value="{{ tender.id }}">
@@ -29,12 +40,16 @@
                     <td>{{ product.producer }}</td>
                     <td>{{ product.country }}</td>
                     <td>{{ product.register_date }}</td>
-                    <td><input type="radio" name="selected_product" value="{{ product.trade_name }}"></td>
+                    <td>
+                        <input type="checkbox" name="selected_product" value="{{ product.id }}"
+                               {% if product.id in selected_product_ids %}checked{% endif %}>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <button type="submit">Select Product</button>
+        <button type="submit" name="action" value="save">Добавить</button>
     </form>
 </body>
 </html>
+

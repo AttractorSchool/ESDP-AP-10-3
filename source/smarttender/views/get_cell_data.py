@@ -1,33 +1,52 @@
+from array import array
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
-from smarttender.models import Tender
+from smarttender.models import Calculation, Plan, TrdBuy, Offer, RefUnit
 
 
 def get_cell_data(request):
     cell_id = request.GET.get('cell_id')
-    tender = get_object_or_404(Tender, id=cell_id)
+    tender = get_object_or_404(Calculation, id=cell_id)
+    plan = get_object_or_404(Plan, lot=tender.lot)
+    offers = Offer.objects.filter(lot=tender.lot)
+
+    product_names = []
+    supplier_names = []
+
+    for offer in offers:
+        if offer.product:
+            product_names.append(offer.product.trade_name)
+        else:
+            product_names.append('Товар не выбран')
+
+        if offer.supplier:
+            supplier_names.append(offer.supplier.name)
+        else:
+            supplier_names.append('Поставщик не выбран')
     data = {
-        'lot_number': tender.lot.lot_number if tender.lot else None,
-        'customer_name_ru': tender.lot.customer_name_ru if tender.lot else None,
-        'name_ru': tender.lot.name_ru if tender.lot else None,
-        'description_ru': tender.lot.description_ru if tender.lot else None,
-        'price': tender.lot.plans.price if tender.lot and tender.lot.plans else None,
-        'count': tender.lot.plans.count if tender.lot and tender.lot.plans else None,
-        'ref_unit': tender.lot.plans.ref_units.name_ru if tender.lot and tender.lot.plans and tender.lot.plans.ref_units else None,
-        'amount': tender.lot.plans.amount if tender.lot and tender.lot.plans else None,
-        'supply_date_ru': tender.lot.plans.supply_date_ru if tender.lot and tender.lot.plans else None,
-        'products': tender.lot.products.trade_name if tender.lot and tender.lot.products else None,
-        'suppliers': tender.lot.suppliers.name if tender.lot and tender.lot.suppliers else None,
+        'tender_id': tender.id,
+        'lot_number': tender.lot.lot_number,
+        'customer_name_ru': tender.lot.customer_name_ru,
+        'name_ru': tender.lot.name_ru,
+        'description_ru': tender.lot.description_ru,
+        'price': plan.price,
+        'count': plan.count,
+        'ref_unit':  list(plan.ref_units.values('name_ru')),
+        'amount': plan.amount,
+        'supply_date_ru': plan.supply_date_ru,
+        'products': product_names,
+        'suppliers': supplier_names,
         'supplier_discount': tender.supplier_discount,
         'vat': tender.vat,
         'note': tender.note,
         'manager': tender.manager,
         'purchase_price': tender.purchase_price,
         'overall_info': tender.overall_info,
-        'publish_date': tender.lot.trd_buy.publish_date if tender.lot and tender.lot.trd_buy else None,
-        'end_date': tender.lot.trd_buy.end_date if tender.lot and tender.lot.trd_buy else None,
-        'ref_trade_method': tender.lot.trd_buy.ref_trade_methods.name_ru if tender.lot and tender.lot.trd_buy and tender.lot.trd_buy.ref_trade_methods else None,
+        'publish_date': tender.lot.trd_buy.name_ru,
+        'end_date': tender.lot.trd_buy.end_date,
+        'ref_trade_method': tender.lot.trd_buy.ref_trade_methods.first().name_ru,
         'paper_ad_link': tender.paper_ad_link,
         'lot_link': tender.lot_link,
         'profit_rate': tender.profit_rate,
@@ -39,7 +58,7 @@ def get_cell_data(request):
         'overall_purchase_amount': tender.overall_purchase_amount,
         'overall_contract_amount': tender.overall_contract_amount,
         'winning_price': tender.winning_price,
-        'commercial_offer_text': tender.commercial_offer_text,
-        'status': tender.status
+        'commercial_offer_text': tender.commercial_offer_text
+        # 'status': tender.status
     }
     return JsonResponse(data)

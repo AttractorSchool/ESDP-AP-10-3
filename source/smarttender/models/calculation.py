@@ -1,20 +1,15 @@
 from django.db import models
-from django.db.models import TextChoices
 from django.utils import timezone
 
 
-class StatusChoice(TextChoices):
-    NEW = 'NEW', 'Новый'
-    IN_PROGRESS = 'IN_PROGRESS', 'В процессе'
-    DONE = 'DONE', 'Завершён'
-
-
-class Tender(models.Model):
+# Расчёты
+class Calculation(models.Model):
     lot = models.ForeignKey(
         null=True,
         blank=True,
-        to="smarttender.Lot",
-        on_delete=models.CASCADE
+        to='smarttender.Lot',
+        on_delete=models.CASCADE,
+        related_name='calculations'
     )
     supplier_discount = models.CharField(
         max_length=100,
@@ -119,19 +114,13 @@ class Tender(models.Model):
         blank=True,
         verbose_name='Текст для КП'
     )
-    status = models.CharField(
-        max_length=30,
-        choices=StatusChoice.choices,
-        default=StatusChoice.NEW,
-        verbose_name='Статус'
-    )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата и время создания"
+        verbose_name='Дата и время создания'
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name="Дата и время изменения"
+        verbose_name='Дата и время изменения'
     )
     is_deleted = models.BooleanField(
         null=False,
@@ -145,7 +134,7 @@ class Tender(models.Model):
     )
 
     def __str__(self):
-        return self.lot
+        return self.pk
 
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True

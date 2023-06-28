@@ -37,7 +37,7 @@ class ProductListView(ListView):
                     producer=row[8],
                     country=row[9],
                     classification=row[10],
-                    IGN=row[11],
+                    ign=row[11],
                     atx_classification=row[12],
                     med_form=row[13],
                     release_form=row[14],
