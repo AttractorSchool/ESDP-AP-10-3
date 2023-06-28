@@ -11,6 +11,7 @@ def get_cell_data(request):
     tender = get_object_or_404(Calculation, id=cell_id)
     plan = get_object_or_404(Plan, lot=tender.lot)
     offer = get_object_or_404(Offer, lot=tender.lot)
+    # TODO подумать над необходимостью вывода offer
     data = {
         'tender_id': tender.id,
         'lot_number': tender.lot.lot_number,
@@ -22,8 +23,9 @@ def get_cell_data(request):
         'ref_unit':  list(plan.ref_units.values('name_ru')),
         'amount': plan.amount,
         'supply_date_ru': plan.supply_date_ru,
-        'products': offer.product.trade_name,
-        'suppliers': offer.supplier.name,
+        # 'products': offer.product.trade_name,
+        # 'suppliers': offer.supplier.name,
+        # TODO подумать над необходимостью закомментированных полей
         'supplier_discount': tender.supplier_discount,
         'vat': tender.vat,
         'note': tender.note,
