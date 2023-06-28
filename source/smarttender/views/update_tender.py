@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 
-from smarttender.models import TrdBuy
+from smarttender.models import Calculation
 
 
 def update_tender(request):
@@ -12,7 +12,7 @@ def update_tender(request):
         note = request.POST.get('note')
         purchase_price = request.POST.get('purchase_price')
 
-        tender = TrdBuy.objects.get(id=tender_id)
+        tender = Calculation.objects.get(id=tender_id)
 
         tender.supplier_discount = supplier_discount if supplier_discount else None
         tender.vat = vat if vat else None
