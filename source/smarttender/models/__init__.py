@@ -8,3 +8,5 @@ from .ref_unit import RefUnit
 from .supplier import Supplier
 from .tender import Tender
 from .trd_buy import TrdBuy
+from .price import Price
+from .opt_price import OptPrice
