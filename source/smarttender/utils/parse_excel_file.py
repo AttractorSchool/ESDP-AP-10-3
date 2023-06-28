@@ -60,9 +60,10 @@ def parse_excel_file(excel_file):
             trd_buy = TrdBuy.objects.create(
                 publish_date=row[18],
                 end_date=row[19],
-                ref_trade_methods=trade_method,
+                # ref_trade_methods=trade_method,
                 number_anno=trd_buy_number_anno
             )
+            trd_buy.ref_trade_methods.add(trade_method)
             plan = Plan.objects.create(
                 price=row[5],
                 count=row[6],

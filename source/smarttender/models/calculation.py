@@ -8,7 +8,8 @@ class Calculation(models.Model):
         null=True,
         blank=True,
         to='smarttender.Lot',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='calculations'
     )
     supplier_discount = models.CharField(
         max_length=100,
@@ -133,7 +134,7 @@ class Calculation(models.Model):
     )
 
     def __str__(self):
-        return self.lot
+        return self.pk
 
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True

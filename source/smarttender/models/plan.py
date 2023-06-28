@@ -98,7 +98,7 @@ class Plan(models.Model):
     )
 
     def __str__(self):
-        return self.ref_units
+        return self.name_ru
 
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True

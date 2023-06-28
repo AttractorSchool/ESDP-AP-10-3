@@ -96,33 +96,21 @@ class TrdBuy(models.Model):
         blank=True,
         verbose_name='Финансовый год'
     )
-    ref_trade_methods = models.ForeignKey(
-        null=True,
+    ref_trade_methods = models.ManyToManyField(
         blank=True,
-        to='smarttender.RefTradeMethod',
-        on_delete=models.CASCADE,
-        related_name='trd_buys'
+        to='smarttender.RefTradeMethod'
     )
-    ref_subject_type = models.ForeignKey(
-        null=True,
+    ref_subject_type = models.ManyToManyField(
         blank=True,
-        to='smarttender.RefSubjectType',
-        on_delete=models.CASCADE,
-        related_name='trd_buys'
+        to='smarttender.RefSubjectType'
     )
-    ref_buy_status = models.ForeignKey(
-        null=True,
+    ref_buy_status = models.ManyToManyField(
         blank=True,
-        to='smarttender.RefBuyStatus',
-        on_delete=models.CASCADE,
-        related_name='trd_buys'
+        to='smarttender.RefBuyStatus'
     )
-    ref_type_trade = models.ForeignKey(
-        null=True,
+    ref_type_trade = models.ManyToManyField(
         blank=True,
-        to='smarttender.RefTypeTrade',
-        on_delete=models.CASCADE,
-        related_name='trd_buys'
+        to='smarttender.RefTypeTrade'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

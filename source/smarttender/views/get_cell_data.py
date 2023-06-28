@@ -16,7 +16,11 @@ def get_cell_data(request):
     supplier_names = []
 
     for offer in offers:
-        product_names.append(offer.product.trade_name)
+        if offer.product:
+            product_names.append(offer.product.trade_name)
+        else:
+            product_names.append('Товар не выбран')
+
         if offer.supplier:
             supplier_names.append(offer.supplier.name)
         else:
@@ -42,7 +46,7 @@ def get_cell_data(request):
         'overall_info': tender.overall_info,
         'publish_date': tender.lot.trd_buy.name_ru,
         'end_date': tender.lot.trd_buy.end_date,
-        'ref_trade_method': tender.lot.trd_buy.ref_trade_methods.name_ru,
+        'ref_trade_method': tender.lot.trd_buy.ref_trade_methods.first().name_ru,
         'paper_ad_link': tender.paper_ad_link,
         'lot_link': tender.lot_link,
         'profit_rate': tender.profit_rate,
