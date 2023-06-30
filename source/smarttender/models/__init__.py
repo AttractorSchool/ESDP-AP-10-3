@@ -12,3 +12,5 @@ from .ref_type_trade import RefTypeTrade
 from .ref_unit import RefUnit
 from .supplier import Supplier
 from .trd_buy import TrdBuy
+from .price import Price
+from .opt_price import OptPrice
