@@ -49,13 +49,14 @@
     text-align: center;
     border: solid 1px gray;
 }
+
 .tender_details_modal {
   display: none;
   position: fixed;
   z-index: 999;
-  top: 50%;
-  left: 80%;
-  transform: translate(-30%, 0);
+  top: 0;
+  left: 81%;
+  right: 0;
   width: 100%;
   max-width: 507px;
   overflow-y: auto;
@@ -63,6 +64,18 @@
   padding: 20px;
   box-sizing: border-box;
 }
+
+@media (max-width: 767px) {
+  .tender_details_modal {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+}
+
 .close {
   position: absolute;
   top: 10px;
@@ -81,7 +94,4 @@
 b {
   margin-right: 5px;
   float: left;
-}
-.modal-dialog {
-    max-width: 1200px !important;
 }
