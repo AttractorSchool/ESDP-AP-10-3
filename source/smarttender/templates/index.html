@@ -70,7 +70,8 @@
         <th scope="col">№ лота</th>
         <th scope="col">Учреждение</th>
         <th scope="col">Наименование</th>
-        <th scope="col">Доп. инфо Т.С.</th>
+        <th scope="col">Доп. инфо ТС</th>
+        <th scope="col">Ссылка на ТС</th>
         <th scope="col">Цена за единицу</th>
         <th scope="col">Количество</th>
         <th scope="col">Единица измерения</th>
@@ -87,6 +88,7 @@
         <td class="tender-cell">{{ lot.customer_name_ru }}</td>
         <td class="tender-cell">{{ lot.name_ru }}</td>
         <td class="tender-cell">{{ lot.description_ru }}</td>
+        <td class="tender-cell">{{ lot.files.file_path }}</td>
 
         <!--        Загрузка планов-->
         {% include 'partial/tender_plans.html' %}
