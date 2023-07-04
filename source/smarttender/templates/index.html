@@ -88,13 +88,27 @@
         <td class="tender-cell">{{ lot.customer_name_ru }}</td>
         <td class="tender-cell">{{ lot.name_ru }}</td>
         <td class="tender-cell">{{ lot.description_ru }}</td>
-        {% for file in lot.files.all %}
-        <td class="tender-cell">
-            <a href="{{ file.file_path }}">
-                link
-            </a>
-        </td>
-        {% endfor %}
+        {% if lot.files.all %}
+            {% if lot.files.all|length < 2 %}
+                {% for file in lot.files.all %}
+                    <td class="tender-cell text-center">
+                        <a href="{{ file.file_path }}">
+                            <img src="../../static/media/box-arrow-down.svg" alt="{{ file.original_name }}">
+                        </a>
+                    </td>
+                {% endfor %}
+            {% else %}
+                <td class="tender-cell text-center">
+                    {% for file in lot.files.all %}
+                        <a href="{{ file.file_path }}">
+                            <img src="../../static/media/box-arrow-down.svg" alt="{{ file.original_name }}">
+                        </a>{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+            {% endif %}
+        {% else %}
+            <td class="tender-cell"></td>
+        {% endif %}
 
         <!--        Загрузка планов-->
         {% include 'partial/tender_plans.html' %}

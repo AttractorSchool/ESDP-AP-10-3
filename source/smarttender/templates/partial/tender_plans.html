@@ -46,20 +46,12 @@
                 <td class="tender-cell"></td>
                 <td class="tender-cell"></td>
                 <td class="tender-cell"></td>
-                {% if plan.price %}
-                    <td class="tender-cell">KZT {{ plan.price }}</td>
-                {% else %}
-                    <td class="tender-cell">{{ plan.price }}</td>
-                {% endif %}
-                    <td class="tender-cell">{{ plan.count }}</td>
+                <td class="tender-cell">{{ plan.price }}</td>
+                <td class="tender-cell">{{ plan.count }}</td>
                 {% for unit in plan.ref_units.all %}
                     <td class="tender-cell">{{ unit.name_ru }}</td>
                 {% endfor %}
-                {% if plan.amount %}
-                    <td class="tender-cell">KZT {{ plan.amount }}</td>
-                {% else %}
-                    <td class="tender-cell">{{ plan.amount }}</td>
-                {% endif %}
+                <td class="tender-cell">{{ plan.amount }}</td>
                 <td class="tender-cell">{{ plan.supply_date_ru }}</td>
             </tr>
         {% endfor %}
