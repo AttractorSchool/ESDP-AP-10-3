@@ -88,7 +88,13 @@
         <td class="tender-cell">{{ lot.customer_name_ru }}</td>
         <td class="tender-cell">{{ lot.name_ru }}</td>
         <td class="tender-cell">{{ lot.description_ru }}</td>
-        <td class="tender-cell">{{ lot.files.file_path }}</td>
+        {% for file in lot.files.all %}
+        <td class="tender-cell">
+            <a href="{{ file.file_path }}">
+                link
+            </a>
+        </td>
+        {% endfor %}
 
         <!--        Загрузка планов-->
         {% include 'partial/tender_plans.html' %}
