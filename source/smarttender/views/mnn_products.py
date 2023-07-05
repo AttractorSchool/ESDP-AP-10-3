@@ -13,6 +13,7 @@ def similar_products(request, calculation_id):
         query |= Q(trade_name__icontains=part.strip()) | Q(ign__icontains=part.strip())
 
     similar_products = Product.objects.filter(query)
+
     product_list = []
     for product in similar_products:
         product_data = {
@@ -44,6 +45,8 @@ def selected_product(request):
     if request.method == 'POST':
         selected_product_ids = request.POST.getlist('selected_product')
         calculation_id = request.POST.get('tender_id')
+        calculation = get_object_or_404(Calculation, id=calculation_id)
+        print(calculation.lot.id)
         action = request.POST.get('action')
 
         selected_products = []
@@ -63,8 +66,7 @@ def selected_product(request):
             request.session[selected_products_key] = selected_products
             for product_id in selected_product_ids:
                 product = get_object_or_404(Product, id=product_id)
-                print(product)
-                offer = Offer.objects.create(lot_id=calculation_id, product=product)
+                offer = Offer.objects.create(lot_id=calculation.lot.id, product=product)
             return redirect('similar_products', calculation_id=calculation_id)
 
     return JsonResponse({'error': 'Invalid request method.'})

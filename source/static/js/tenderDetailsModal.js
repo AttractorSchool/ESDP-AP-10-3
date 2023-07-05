@@ -1,3 +1,47 @@
+$(document).ready(function () {
+    $(document).on('click', '.find-supplier-btn', function () {
+        let tenderId = $('#modal-tender_id').text();
+        let offerId = $(this).data('offer-id');
+        let url = '/find_supplier/' + tenderId + '/' + offerId + '/';
+        let popupWindow = window.open(url, 'popup', 'width=1000px,height=600px');
+
+        popupWindow.onunload = function () {
+            $.ajax({
+                url: '/get_cell_data/',
+                type: 'GET',
+                data: {
+                    'cell_id': tenderId
+                },
+                success: function (data) {// Convert offer_ids to a string and join them with a comma separator
+                    $('#modal-offer_ids').empty().text(data.offer_ids);  // Update the content of modal-offer_ids element
+                    $('#modal-products').empty();
+                    for (let i = 0; i < data.products.length; i++) {
+                        let product = data.products[i];
+                        let productHtml = '<div>' +
+                            '<p>' + product + '</p>' +
+                            '</div>';
+                        $('#modal-products').append(productHtml);
+                    }
+                    $('#modal-suppliers').empty();
+                    for (let i = 0; i < data.products.length; i++) {
+                        let product = data.products[i];
+                        let supplier = data.suppliers[i];
+                        let offerId = data.offer_ids[i];
+                        let productHtml = '<div>' +
+                            '<p>' + product + ' ' + supplier + '</p>' +
+                            '<button class="btn btn-primary find-supplier-btn" data-offer-id="' + offerId + '">Подобрать поставщика</>' +
+                            '</div>';
+                        $('#modal-suppliers').append(productHtml);
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        };
+    });
+});
+
 $('.modal-trigger').click(function () {
     let cellId = $(this).data('cell-id');
 
@@ -24,8 +68,27 @@ $('.modal-trigger').click(function () {
             }
             $('#modal-amount').text(data.amount);
             $('#modal-supply_date_ru').text(data.supply_date_ru);
-            $('#modal-products').text(data.products);
-            $('#modal-suppliers').text(data.suppliers);
+            $('#modal-offer_ids').empty().text(data.offer_ids);
+            $('#modal-products');
+            for (let i = 0; i < data.products.length; i++) {
+                let product = data.products[i];
+                let productHtml = '<div>' +
+                    '<p>' + product + '</p>' +
+                    '</div>';
+                $('#modal-products').append(productHtml);
+            }
+            $('#modal-suppliers').empty();
+            for (let i = 0; i < data.products.length; i++) {
+                let product = data.products[i];
+                let supplier = data.suppliers[i];
+                let offerId = data.offer_ids[i];
+                let productHtml = '<div>' +
+                    '<p>' + product + ' ' + supplier + '</p>' +
+                    '<button class="btn btn-primary find-supplier-btn" data-offer-id="' + offerId + '">Подобрать поставщика</>' +
+                    '</div>';
+                $('#modal-suppliers').append(productHtml);
+            }
+
 //                $('#modal-price_without_discount').text(data.price_without_discount);
             $('#modal-supplier_discount').text(data.supplier_discount);
 //                $('#modal-price_with_discount').text(data.price_with_discount);
@@ -60,5 +123,4 @@ $('.modal-trigger').click(function () {
             $('#myModal').modal('hide');
         }
     });
-
 });
