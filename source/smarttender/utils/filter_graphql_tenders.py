@@ -6,8 +6,8 @@ def filter_graphql_tenders(tenders, search_value):
 
     if search_value:
         for tender in tenders:
-            for lot in tender['Lots']:
-                for plan in lot['Plans']:
+            for lot in tender['Lots'] if tender['Lots'] else None:
+                for plan in lot['Plans'] if lot['Plans'] else None:
                     if 'refEnstruCode' in plan and search_value in plan['refEnstruCode']:
                         filtered_tenders.append(tender)
                         break
