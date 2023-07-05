@@ -4,7 +4,8 @@ from smarttender.views import ProductListView, update_tender, get_cell_data
 from smarttender.views.enstru_codes import EnsTruListView, enstru_create_view
 from smarttender.views.mnn_products import similar_products, selected_product
 from smarttender.views.tenders import TenderListView, tender_graphql_view, tender_save_view
-from smarttender.views.price_pdf import pdf_view,opt_pdf_price
+from smarttender.views.price_pdf import pdf_view, opt_pdf_price
+from smarttender.views.find_supplier import find_supplier, selected_supplier
 
 urlpatterns = [
     path('', TenderListView.as_view(), name='index'),
@@ -19,5 +20,6 @@ urlpatterns = [
     path('enstru_create', enstru_create_view, name='enstru_create_view'),
     path('pdf_upload', pdf_view, name='pdf_view'),
     path('opt_pdf_upload', opt_pdf_price, name='opt_pdf_view'),
-
+    path('find_supplier/<int:tender_id>/<int:offer_id>/', find_supplier, name='find_supplier'),
+    path('selected_supplier/', selected_supplier, name='selected_supplier'),
 ]
