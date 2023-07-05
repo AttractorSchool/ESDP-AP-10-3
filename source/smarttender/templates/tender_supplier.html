@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Подбор поставщика</title>
+</head>
+<body>
+    <h2>Информация по лоту</h2>
+    <p>Id лота: {{ tender.id }}</p>
+    <p>Id оффера: {{ offer.id }}</p>
+    <p><strong>№ лота:</strong> {{ tender.lot.lot_number }}</p>
+    <p><strong>Учреждение:</strong> {{ tender.lot.customer_name_ru }}</p>
+    <p><strong>Наименование:</strong> {{ tender.lot.name_ru }}</p>
+    <p><strong>Дополнительная информация:</strong> {{ tender.lot.description_ru }}</p>
+    {% if offer.product %}
+        <p><strong>Выбранный товар:</strong> {{ offer.product }}</p>
+    {% else %}
+        <p>Товар не выбран</p>
+    {% endif %}
+    {% if offer.supplier %}
+        <p><strong>Выбранный поставщик:</strong> {{ offer.supplier }}</p>
+    {% else %}
+        <p>Поставщик не выбран</p>
+    {% endif %}
+
+
+    <h2>Подходящие поставщики</h2>
+    {% if supplier_list %}
+        <form method="POST" action="{% url 'selected_supplier' %}">
+        {% csrf_token %}
+        <input type="hidden" name="tender_id" value="{{ tender.id }}">
+        <input type="hidden" name="offer_id" value="{{ offer.id }}">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Наименование Поставщика</th>
+                    <th>Телефон</th>
+                    <th>Почта</th>
+                    <th>Поставляемый товар</th>
+                    <th>Выбрать</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for supplier in supplier_list %}
+                    <tr>
+                        <td>{{ supplier.name }}</td>
+                        <td>{{ supplier.phone }}</td>
+                        <td>{{ supplier.email }}</td>
+                        <td>{{ supplier.product_name }}</td>
+                        <td>
+                            <input type="checkbox" name="selected_supplier" value="{{ supplier.id }}"
+                                {% if selected_suppliers_ids and supplier.id in selected_suppliers_ids %}checked{% endif %}>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" name="action" value="save">Сохранить</button>
+        </form>
+    {% else %}
+        <p>Нет подходящих поставщиков или не был выбран подходящий товар</p>
+    {% endif %}
+</body>
+</html>
