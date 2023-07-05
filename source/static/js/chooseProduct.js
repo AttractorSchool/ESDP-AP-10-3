@@ -11,13 +11,28 @@ $(document).ready(function() {
                 data: {
                     'cell_id': tenderId
                 },
-                success: function(data) {
-                    $('#modal-tender_id').text(data.tender_id);
-                    $('#modal-lot_number').text(data.lot_number);
-                    $('#modal-products').text(data.products);
-                    $('#modal-suppliers').text(data.suppliers);
+                success: function(data) {// Convert offer_ids to a string and join them with a comma separator
+                    $('#modal-offer_ids').empty().text(data.offer_ids);  // Update the content of modal-offer_ids element
+                    $('#modal-products').empty();
+                        for (let i = 0; i < data.products.length; i++) {
+                        let product = data.products[i];
+                        let productHtml = '<div>'+
+                            '<p>' + product + '</p>' +
+                            '</div>';
+                        $('#modal-products').append(productHtml);
+                    }
+                    $('#modal-suppliers').empty();
+                        for (let i = 0; i < data.products.length; i++) {
+                        let product = data.products[i];
+                        let supplier = data.suppliers[i];
+                        let offerId = data.offer_ids[i];
+                        let productHtml = '<div>'+
+                            '<p>' + product + ' ' + supplier + '</p>' +
+                            '<button class="btn btn-primary find-supplier-btn" data-offer-id="' + offerId + '">Подобрать поставщика</>' +
+                            '</div>';
+                        $('#modal-suppliers').append(productHtml);
+                    }
 
-                    $('#myModal').modal('show');
                 },
                 error: function(xhr, status, error) {
                 }
