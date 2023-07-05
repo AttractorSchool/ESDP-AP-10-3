@@ -2,7 +2,6 @@ from array import array
 
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-
 from smarttender.models import Calculation, Plan, TrdBuy, Offer, RefUnit
 
 
@@ -14,26 +13,27 @@ def get_cell_data(request):
 
     product_names = []
     supplier_names = []
+    offer_ids = []
 
-    for offer in offers:
-        if offer.product:
-            product_names.append(offer.product.trade_name)
-        else:
-            product_names.append('Товар не выбран')
-
+    for i, offer in enumerate(offers):
+        num = i + 1
+        product_names.append(f"{num}. {offer.product.trade_name} {offer.id}")
         if offer.supplier:
             supplier_names.append(offer.supplier.name)
         else:
             supplier_names.append('Поставщик не выбран')
+        offer_ids.append(offer.id)
+
     data = {
         'tender_id': tender.id,
+        'offer_ids': offer_ids,  # Add offer ids to the data dictionary
         'lot_number': tender.lot.lot_number,
         'customer_name_ru': tender.lot.customer_name_ru,
         'name_ru': tender.lot.name_ru,
         'description_ru': tender.lot.description_ru,
         'price': plan.price,
         'count': plan.count,
-        'ref_unit':  list(plan.ref_units.values('name_ru')),
+        'ref_unit': list(plan.ref_units.values('name_ru')),
         'amount': plan.amount,
         'supply_date_ru': plan.supply_date_ru,
         'products': product_names,
