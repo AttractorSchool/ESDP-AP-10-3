@@ -12,7 +12,7 @@ def pdf_view(request):
         with open(file_path, 'wb') as file:
             for chunk in uploaded_file.chunks():
                 file.write(chunk)
-        tables = tabula.read_pdf(file_path, pages='1-156', multiple_tables=False, encoding='cp1251')
+        tables = tabula.read_pdf(file_path, pages='5-156', multiple_tables=False, encoding='cp1251')
         data = tables[0].values.tolist()
         header = data[0]
         rows = data[1:]
