@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Главная страница{% endblock %}
+{% block title %}FAM Tenders{% endblock %}
 {% block navbar_item %}
 {% include 'partial/search_form.html' %}
 {% endblock %}
@@ -27,6 +27,9 @@
     </div>
     <div id="progress-status"></div>
 </div>
+
+<!--Поиск по дате публикации-->
+<input class="form-control me-2" type="text" id="datepicker" placeholder="Выберите дату" style="width: 280px;">
 
 <!--Поиск по коду ЕНС ТРУ. Если значение пустое, то загружает все объявления-->
 <div class="d-flex tenders_search mt-3 pb-5" id="searchForm">
@@ -93,7 +96,8 @@
                 {% for file in lot.files.all %}
                     <td class="tender-cell text-center">
                         <a href="{{ file.file_path }}">
-                            <img src="../../static/media/box-arrow-down.svg" alt="{{ file.original_name }}">
+                            <img src="../../static/media/box-arrow-down.svg" alt="{{ file.original_name }}" width="25"
+                                 height="25">
                         </a>
                     </td>
                 {% endfor %}
@@ -101,7 +105,8 @@
                 <td class="tender-cell text-center">
                     {% for file in lot.files.all %}
                         <a href="{{ file.file_path }}">
-                            <img src="../../static/media/box-arrow-down.svg" alt="{{ file.original_name }}">
+                            <img src="../../static/media/box-arrow-down.svg" alt="{{ file.original_name }}" width="25"
+                                 height="25">
                         </a>{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 </td>

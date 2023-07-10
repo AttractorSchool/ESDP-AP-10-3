@@ -34,8 +34,7 @@ class TenderListView(LoginRequiredMixin, ListView):
         queryset = super().get_queryset().exclude(is_deleted=True)
 
         if self.search_value:
-            query = Q(trd_buy_name_ru__icontains=self.search_value) | Q(
-                trd_buy_lots_lot_number___icontains=self.search_value)
+            query = Q(name_ru__icontains=self.search_value) | Q(lot_number__icontains=self.search_value)
             queryset = queryset.filter(query)
         return queryset
 

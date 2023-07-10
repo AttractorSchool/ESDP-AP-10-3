@@ -76,12 +76,6 @@ function fetchData() {
 
         var checkboxCell = document.createElement('td');
         var checkboxInput = document.createElement('input')
-        //
-
-
-//        checkboxInput.addEventListener('click', function () {
-//                console.log("sda" + checkboxInput.value)
-//        });
 
         checkboxInput.type = 'checkbox';
         checkboxInput.className = 'form-check-input';
@@ -131,7 +125,7 @@ function fetchData() {
                 row2.appendChild(descriptionRu);
 
                 var price = document.createElement('td');
-                price.textContent = (tender.Plans && tender.Plans[0] && tender.Plans[0].amount != 0) ? 'KZT ' + tender.Plans[0].amount : '';
+                price.textContent = tender.Plans && tender.Plans[0] && tender.Plans[0].price || '';
                 price.className = 'tender-cell price';
                 row2.appendChild(price);
 
@@ -146,7 +140,7 @@ function fetchData() {
                 row2.appendChild(refUnit);
 
                 var amount = document.createElement('td');
-                amount.textContent = (tender.Plans && tender.Plans[0] && tender.Plans[0].amount != 0) ? 'KZT ' + tender.Plans[0].amount : '';
+                amount.textContent = tender.Plans && tender.Plans[0] && tender.Plans[0].amount || '';
                 amount.className = 'tender-cell amount';
                 row2.appendChild(amount);
 
