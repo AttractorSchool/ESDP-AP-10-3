@@ -39,6 +39,7 @@ def pdf_view(request):
     prices = Price.objects.all()
     return render(request, 'price_pdf.html', {'prices': prices})
 
+
 def opt_pdf_price(request):
     if request.method == 'POST':
         uploaded_file = request.FILES['pdf_file']

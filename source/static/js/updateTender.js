@@ -6,7 +6,11 @@ editButton.addEventListener('click', function() {
 });
 
 saveButton.addEventListener('click', function() {
-    saveChanges();
+    if (areFieldsHidden()) {
+        toggleToEditButton();
+    } else {
+        saveChanges();
+    }
 });
 
 function enableEditing() {
@@ -31,7 +35,11 @@ function enableEditing() {
 
     editButton.style.display = 'none';
 
-    saveButton.style.display = 'inline-block';
+    if (areFieldsHidden()) {
+        toggleToEditButton();
+    } else {
+        saveButton.style.display = 'inline-block';
+    }
 }
 
 function saveChanges() {
@@ -40,14 +48,24 @@ function saveChanges() {
     let noteElement = document.getElementById('modal-note');
     let purchasePriceElement = document.getElementById('modal-purchase_price');
 
-    let updatedSupplierDiscount = document.getElementById('edit-supplier_discount').value;
-    let updatedVat = document.getElementById('edit-vat').value;
-    let updatedNote = document.getElementById('edit-note').value;
-    let updatedPurchasePrice = document.getElementById('edit-purchase_price').value;
+    let updatedSupplierDiscountInput = document.getElementById('edit-supplier_discount');
+    let updatedVatInput = document.getElementById('edit-vat');
+    let updatedNoteInput = document.getElementById('edit-note');
+    let updatedPurchasePriceInput = document.getElementById('edit-purchase_price');
+
+    let updatedSupplierDiscount = updatedSupplierDiscountInput ? updatedSupplierDiscountInput.value : '';
+    let updatedVat = updatedVatInput ? updatedVatInput.value : '';
+    let updatedNote = updatedNoteInput ? updatedNoteInput.value : '';
+    let updatedPurchasePrice = updatedPurchasePriceInput ? updatedPurchasePriceInput.value : '';
 
     let tenderId = document.getElementById('modal-tender_id').textContent.trim();
     let url = '/update_tender/';
     let csrftoken = getCookie('csrftoken');
+
+    if (areFieldsHidden()) {
+        toggleToEditButton();
+        return;
+    }
 
     $.ajax({
         url: url,
@@ -75,8 +93,26 @@ function saveChanges() {
     });
 }
 
+function areFieldsHidden() {
+    let supplierDiscountInput = document.getElementById('edit-supplier_discount');
+    let vatInput = document.getElementById('edit-vat');
+    let noteInput = document.getElementById('edit-note');
+    let purchasePriceInput = document.getElementById('edit-purchase_price');
+
+    return (
+        (supplierDiscountInput && supplierDiscountInput.style.display === 'none') ||
+        (vatInput && vatInput.style.display === 'none') ||
+        (noteInput && noteInput.style.display === 'none') ||
+        (purchasePriceInput && purchasePriceInput.style.display === 'none')
+    );
+}
+
+function toggleToEditButton() {
+    saveButton.style.display = 'none';
+    editButton.style.display = 'inline-block';
+}
+
 function disableEditing() {
     editButton.style.display = 'inline-block';
-
     saveButton.style.display = 'none';
 }
