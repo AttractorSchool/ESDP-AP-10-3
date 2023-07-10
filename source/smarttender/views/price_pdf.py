@@ -12,17 +12,17 @@ def pdf_view(request):
         with open(file_path, 'wb') as file:
             for chunk in uploaded_file.chunks():
                 file.write(chunk)
-        tables = tabula.read_pdf(file_path, pages='1-156', multiple_tables=False, encoding='cp1251')
+        tables = tabula.read_pdf(file_path, pages='4-156', multiple_tables=False, encoding='cp1251')
         data = tables[0].values.tolist()
         header = data[0]
         rows = data[1:]
         for row in rows:
-            trade_name = row[1].replace('-', '')
-            mnn = row[2].replace('-', '')
-            medicine = row[3].replace('-', '')
+            trade_name = row[1]
+            mnn = row[2]
+            medicine = row[3]
             registration_number = row[5]
-            unit = row[6].replace('-', '')
-            limit_price = row[7].replace('-', '')
+            unit = row[6]
+            limit_price = row[7]
 
             price = Price(
                 trade_name=trade_name,
