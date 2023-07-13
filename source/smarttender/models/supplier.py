@@ -10,11 +10,13 @@ class Supplier(models.Model):
         verbose_name='Поставщик'
     )
     phone = models.CharField(
+        max_length=255,
         verbose_name='Телефонный номер',
         null=True,
         blank=True,
     )
     email = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='email',

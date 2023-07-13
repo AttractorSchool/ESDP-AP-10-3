@@ -10,11 +10,13 @@ class Product(models.Model):
         blank=True
     )
     register_number = models.CharField(
+        max_length=255,
         verbose_name='Регистрационный номер',
         null=True,
         blank=True
     )
     type = models.CharField(
+        max_length=255,
         verbose_name='Тип',
         null=True,
         blank=True
@@ -25,6 +27,7 @@ class Product(models.Model):
         verbose_name='Торговое наименование'
     )
     view = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='Вид'
@@ -57,6 +60,7 @@ class Product(models.Model):
         verbose_name='Страна'
     )
     classification = models.CharField(
+        max_length=255,
         null=True,
         blank=True
     )
@@ -67,6 +71,7 @@ class Product(models.Model):
         verbose_name='МНН'
     )
     atx_classification = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='ATX классификация'
@@ -84,21 +89,25 @@ class Product(models.Model):
         verbose_name='Форма выпуска'
     )
     shelf_life = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='Срок хранения'
     )
     GMP = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='GMP'
     )
     generic = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='Генерик'
     )
     recipe = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='Рецепт'
@@ -109,21 +118,25 @@ class Product(models.Model):
         verbose_name='Торговая марка'
     )
     patent = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='Патент'
     )
     nd_type = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='Тип НД'
     )
     nd_number = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='Номер НД'
     )
     dosage_and_concentration = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name='Дозировка и концентрация'

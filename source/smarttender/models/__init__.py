@@ -3,7 +3,9 @@ from .enstru import EnsTruCode
 from .file import File
 from .lot import Lot
 from .offer import Offer
+from .opt_price import OptPrice
 from .plan import Plan
+from .price import Price
 from .product import Product
 from .ref_buy_status import RefBuyStatus
 from .ref_subject_type import RefSubjectType
@@ -12,5 +14,3 @@ from .ref_type_trade import RefTypeTrade
 from .ref_unit import RefUnit
 from .supplier import Supplier
 from .trd_buy import TrdBuy
-from .price import Price
-from .opt_price import OptPrice
