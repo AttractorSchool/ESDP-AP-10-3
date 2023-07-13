@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          scripts: |
+          script: |
             cd /home
             git pull
             cd /ESDP-AP-10-3
