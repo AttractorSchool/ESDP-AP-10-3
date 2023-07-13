@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data/
+    environment:
+      - TZ=Asia/Almaty
+      - POSTGRES_DB=smarttender
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    restart: always
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c 'python manage.py migrate && python manage.py loaddata fixtures/data.json && python manage.py runserver 0.0.0.0:8000'
+    volumes:
+      - .:/code
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=smarttender
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+    restart: always
+
+volumes:
+  postgresql_data:
