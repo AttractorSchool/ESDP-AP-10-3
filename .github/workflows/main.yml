@@ -1,1 +1,32 @@
+name: "Smarttender deploy workflow"
 
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'any_host'
+      - name: Clone repo and create environment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          scripts: |
+            cd /home
+            git pull
+            cd /ESDP-AP-10-3
+            docker compose down --remove-orphans
+            docker compose build
+            docker compose up -d
+            systemctl restart nginx
+            exit
