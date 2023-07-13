@@ -25,6 +25,7 @@ services:
     depends_on:
       - db
     environment:
+      - SECRET_KEY='django-insecure-er2wtc8zxkh)_oprn#6-hbx-8fa!gx$35l!0bzcq5g8j9ksc&#'
       - DB_NAME=smarttender
       - DB_USER=postgres
       - DB_PASSWORD=postgres
